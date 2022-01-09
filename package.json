@@ -1,0 +1,19 @@
+{
+  "name": "odinbook",
+  "version": "1.0.0",
+  "description": "A social network",
+  "main": "app.js",
+  "repository": "https://github.com/llfalcao/odinbook",
+  "author": "Luiz Falcao",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./app",
+    "dev": "nodemon ./app"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
