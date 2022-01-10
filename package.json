@@ -7,13 +7,16 @@
   "author": "Luiz Falcao",
   "license": "MIT",
   "scripts": {
-    "start": "node ./app",
-    "dev": "nodemon ./app"
+    "start": "node ./src/server",
+    "dev": "nodemon ./src/server",
+    "test": "jest ./src/test"
   },
   "dependencies": {
     "express": "^4.17.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
   }
 }
