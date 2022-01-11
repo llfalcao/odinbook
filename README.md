@@ -1,3 +1,3 @@
 # Odinbook
 
-Something like Facebook.
+Something like Facebook. [WIP]
