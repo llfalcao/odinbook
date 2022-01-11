@@ -12,7 +12,8 @@
     "test": "jest ./src/test"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6"
   },
   "devDependencies": {
     "jest": "^27.4.7",
