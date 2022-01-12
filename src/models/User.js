@@ -15,13 +15,11 @@ const UserSchema = new Schema({
     country: String,
   },
   profile_pic: String,
-  friends: [
-    { type: Schema.Types.ObjectId, ref: 'User' },
-  ],
+  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
-UserSchema.virtual('full_name').get((user) => {
-  return `${user.first_name} ${user.last_name}`;
+UserSchema.virtual('full_name').get(function () {
+  return `${this.first_name} ${this.last_name}`;
 });
 
 UserSchema.virtual('posts', {
@@ -30,8 +28,8 @@ UserSchema.virtual('posts', {
   localField: '_id',
 });
 
-UserSchema.virtual('url').get(
-  (user) => `/${user.username}`
-);
+UserSchema.virtual('url').get(function () {
+  return `/${this.username}`;
+});
 
 module.exports = mongoose.model('User', UserSchema);
