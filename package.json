@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./src/server",
     "dev": "nodemon ./src/server",
-    "test": "jest ./src/test"
+    "test": "jest ./src/test --verbose"
   },
   "dependencies": {
     "express": "^4.17.2",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "jest": "^27.4.7",
+    "mockingoose": "^2.15.2",
     "nodemon": "^2.0.15",
     "supertest": "^6.1.6"
   }

@@ -1,20 +1,23 @@
-import { Schema, model } from 'mongoose';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  created_at: { type: Date, required: true },
-  date_of_birth: { type: Date, required: true },
+  username: String,
+  password: String,
+  first_name: String,
+  last_name: String,
+  created_at: Date,
+  date_of_birth: Date,
   hobbies: [String],
   location: {
     city: String,
     state: String,
-    country: { type: String, required: true },
+    country: String,
   },
-  profile_pic: { type: String, required: true },
-  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  profile_pic: String,
+  friends: [
+    { type: Schema.Types.ObjectId, ref: 'User' },
+  ],
 });
 
 UserSchema.virtual('full_name').get((user) => {
@@ -27,6 +30,8 @@ UserSchema.virtual('posts', {
   localField: '_id',
 });
 
-UserSchema.virtual('url').get((user) => `/${user.username}`);
+UserSchema.virtual('url').get(
+  (user) => `/${user.username}`
+);
 
-export default model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
