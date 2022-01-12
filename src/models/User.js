@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     country: { type: String, required: true },
   },
   profile_pic: { type: String, required: true },
+  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 UserSchema.virtual('full_name').get((user) => {
@@ -22,7 +23,7 @@ UserSchema.virtual('full_name').get((user) => {
 
 UserSchema.virtual('posts', {
   ref: 'Post',
-  foreignField: 'userId',
+  foreignField: 'author',
   localField: '_id',
 });
 
