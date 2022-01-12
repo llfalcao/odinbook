@@ -67,7 +67,6 @@ describe('User Service', () => {
 
       mockingoose(User).toReturn(user, 'save');
       const results = await createUser(user);
-
       expect(results).toEqual(
         expect.objectContaining(user)
       );
