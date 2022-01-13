@@ -60,9 +60,12 @@ describe('User Service', () => {
     it('should return a created user', async () => {
       const user = {
         username: 'llfalcao',
+        password: 'bcryptSoonTM',
         first_name: 'Luiz',
         last_name: 'Falcao',
+        date_of_birth: new Date(1900, 1, 1),
         hobbies: ['coding', 'music'],
+        location: { country: 'Brazil' },
       };
 
       mockingoose(User).toReturn(user, 'save');

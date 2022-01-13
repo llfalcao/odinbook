@@ -12,7 +12,10 @@ const fetchUser = (id) =>
     .populate('friends')
     .exec();
 
-const createUser = (user) => new User(user).save();
+const createUser = (user) => {
+  user.created_at = new Date();
+  return new User(user).save();
+};
 
 module.exports = {
   fetchUsers,

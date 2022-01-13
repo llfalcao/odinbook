@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./src/server",
     "dev": "nodemon ./src/server",
-    "test": "jest ./src/test --verbose"
+    "test": "jest ./src/test --verbose --detectOpenHandles"
   },
   "dependencies": {
     "dotenv": "^11.0.0",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "jest": "^27.4.7",
     "mockingoose": "^2.15.2",
+    "mongodb-memory-server": "^8.1.0",
     "nodemon": "^2.0.15",
     "supertest": "^6.1.6"
   }
