@@ -1,5 +1,11 @@
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const router = require('./routes');
+
+const mongodb = process.env.MONGODB;
+mongoose.connect(mongodb);
+mongoose.connection.on('error', (err) => console.log(err));
 
 const app = express();
 

@@ -24,7 +24,7 @@ UserSchema.virtual('full_name').get(function () {
 
 UserSchema.virtual('posts', {
   ref: 'Post',
-  foreignField: 'author',
+  foreignField: 'user_id',
   localField: '_id',
 });
 
