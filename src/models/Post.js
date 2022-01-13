@@ -3,10 +3,19 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
-  content: String,
-  created_at: Date,
+  body: {
+    type: String,
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    required: true,
+  },
   updated_at: Date,
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0,
+  },
   liked_by: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
