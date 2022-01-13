@@ -2,17 +2,38 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  username: String,
-  password: String,
-  first_name: String,
-  last_name: String,
-  created_at: Date,
-  date_of_birth: Date,
+  username: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  first_name: {
+    type: String,
+    required: true,
+  },
+  last_name: {
+    type: String,
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    required: true,
+  },
+  date_of_birth: {
+    type: Date,
+    required: true,
+  },
   hobbies: [String],
   location: {
     city: String,
     state: String,
-    country: String,
+    country: {
+      type: String,
+      required: true,
+    },
   },
   profile_pic: String,
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
