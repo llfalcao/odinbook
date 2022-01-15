@@ -51,7 +51,7 @@ UserSchema.virtual('posts', {
 });
 
 UserSchema.virtual('url').get(function () {
-  return `/${this.username}`;
+  return `/u/${this.username}`;
 });
 
 module.exports = model('User', UserSchema);

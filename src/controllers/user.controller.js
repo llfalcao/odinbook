@@ -3,6 +3,7 @@ const {
   fetchUser,
   createUser,
   validateUser,
+  updateUser,
 } = require('../services/users');
 const { validationResult } = require('express-validator');
 
@@ -19,17 +20,41 @@ exports.userDetail = (req, res, next) => {
 };
 
 exports.userCreate = [
-  validateUser,
+  validateUser(),
   async (req, res, next) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.json(errors);
     }
 
     try {
-      const user = req.body;
-      await createUser(user);
-      res.json(user);
+      const userData = req.body;
+      await createUser(userData);
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  },
+];
+
+// TODO: Validate
+exports.userUpdate = [
+  async (req, res, next) => {
+    try {
+      const inputFields = Object.keys(req.body);
+      validateUser(inputFields);
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.json(errors);
+      }
+
+      const { user: userId } = req.params;
+      const { body: userData } = req;
+      await updateUser(userId, userData);
+
+      res.sendStatus(200);
     } catch (error) {
       next(error);
     }
