@@ -18,9 +18,12 @@ const createUser = async (userData) => {
 };
 
 const updateUser = async (userId, userData) => {
-  await User.findById(userId);
+  await User.findById(userId).exec();
   await User.updateOne({ _id: userId }, userData).exec();
 };
+
+const deleteUser = async (userId) =>
+  await User.deleteOne({ _id: userId }).exec();
 
 const validateUser = (fields) => {
   const validations = {
@@ -82,5 +85,6 @@ module.exports = {
   fetchUser,
   createUser,
   updateUser,
+  deleteUser,
   validateUser,
 };

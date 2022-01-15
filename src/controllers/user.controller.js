@@ -2,6 +2,7 @@ const {
   fetchUsers,
   fetchUser,
   createUser,
+  deleteUser,
   validateUser,
   updateUser,
 } = require('../services/users');
@@ -38,7 +39,7 @@ exports.userCreate = [
   },
 ];
 
-// TODO: Validate
+// TODO: auth
 exports.userUpdate = [
   async (req, res, next) => {
     try {
@@ -60,3 +61,19 @@ exports.userUpdate = [
     }
   },
 ];
+
+// todo: auth
+exports.userDelete = async (req, res, next) => {
+  try {
+    const { user } = req.params;
+    const result = await deleteUser(user);
+
+    if (result.deletedCount === 0) {
+      res.json('User not found');
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+};
