@@ -3,10 +3,13 @@ require('../models/Post');
 const { body } = require('express-validator');
 
 const fetchUsers = () =>
-  User.find({}).populate('posts').populate('friends').exec();
+  User.find({}, { password: 0 }).populate('posts').populate('friends').exec();
 
 const fetchUser = (id) =>
-  User.findById(id).populate('posts').populate('friends').exec();
+  User.findById(id, { password: 0 })
+    .populate('posts')
+    .populate('friends')
+    .exec();
 
 const createUser = (user) => {
   user.created_at = new Date();
