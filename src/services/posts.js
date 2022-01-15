@@ -14,3 +14,5 @@ exports.fetchPosts = async (author) => {
 
   return await Post.find({}).exec();
 };
+
+exports.fetchPost = (postId) => Post.findOne({ _id: postId }).exec();

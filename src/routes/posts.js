@@ -2,9 +2,8 @@ const { Router } = require('express');
 const router = Router();
 const postController = require('../controllers/post.controller');
 
-// get posts
 router.get('/', postController.postList);
-// get post
+router.get('/:post', postController.postDetail);
 // create
 // update
 // delete
