@@ -10,6 +10,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api', router);
 
-// TODO: Handle errors
+app.get('*', (req, res) => res.status(404).json('Not Found.'));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json('Internal Server Error');
+});
 
 module.exports = app;
