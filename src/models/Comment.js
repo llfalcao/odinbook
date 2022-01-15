@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose');
 
 const CommentSchema = new Schema({
   user_id: {
@@ -38,4 +37,4 @@ CommentSchema.virtual('url').get(function () {
   return `/posts/${post_id}/${_id}`;
 });
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = model('Comment', CommentSchema);

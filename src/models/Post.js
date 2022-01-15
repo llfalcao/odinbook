@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose');
 
 const PostSchema = new Schema({
   user_id: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -29,4 +28,4 @@ PostSchema.virtual('comments', {
   localField: '_id',
 });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = model('Post', PostSchema);

@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = require('mongoose');
 
 const UserSchema = new Schema({
   username: {
@@ -53,4 +52,4 @@ UserSchema.virtual('url').get(function () {
   return `/${this.username}`;
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = model('User', UserSchema);

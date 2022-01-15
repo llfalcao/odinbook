@@ -1,8 +1,7 @@
 const router = require('express').Router();
-const userController = require('../controllers/user.controller');
+const userRouter = require('./users');
 
 router.get('/', (req, res) => res.json('Odinbook API'));
-
-router.get('/v1/users', userController.userList);
+router.use('/v1/users', userRouter);
 
 module.exports = router;

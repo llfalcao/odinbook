@@ -19,7 +19,6 @@
   "devDependencies": {
     "jest": "^27.4.7",
     "mockingoose": "^2.15.2",
-    "mongodb-memory-server": "^8.1.0",
     "nodemon": "^2.0.15",
     "supertest": "^6.1.6"
   }
