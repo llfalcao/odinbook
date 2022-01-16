@@ -1,6 +1,7 @@
+const { body } = require('express-validator');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 require('../models/Post');
-const { body } = require('express-validator');
 
 exports.fetchUsers = () =>
   User.find({}, { password: 0 })
@@ -14,9 +15,13 @@ exports.fetchUser = (username) =>
     .populate('friends')
     .exec();
 
-// TODO: bcrypt
 exports.createUser = async (userData) => {
-  const user = new User({ ...userData, created_at: new Date() });
+  const hash = await bcrypt.hash(userData.password, 10);
+  const user = new User({
+    ...userData,
+    password: hash,
+    created_at: new Date(),
+  });
   await user.save();
 };
 

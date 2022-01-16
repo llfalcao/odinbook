@@ -16,7 +16,7 @@ exports.userList = (req, res, next) => {
 
 exports.userDetail = (req, res, next) => {
   fetchUser(req.params.user)
-    .then((user) => res.json(user))
+    .then((user) => res.json(user ? user : 'User not found'))
     .catch((error) => next(error));
 };
 
