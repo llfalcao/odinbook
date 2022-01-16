@@ -53,7 +53,9 @@ exports.userUpdate = [
       const { user: userId } = req.params;
       const { body: userData } = req;
       const result = await updateUser(userId, userData);
-      if (!result) res.json('User not found');
+      if (!result) {
+        return res.json('User not found');
+      }
 
       res.sendStatus(200);
     } catch (error) {
@@ -74,6 +76,10 @@ exports.userDelete = async (req, res, next) => {
 
     res.sendStatus(200);
   } catch (error) {
-    next(error);
+    if (error.kind === 'ObjectId') {
+      return res.json('User not found');
+    } else {
+      next(error);
+    }
   }
 };

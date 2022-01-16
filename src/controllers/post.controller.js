@@ -12,9 +12,7 @@ exports.postList = async (req, res, next) => {
   try {
     const { author } = req.query;
     const posts = await fetchPosts(author);
-    if (!posts) return res.json('Author does not exist');
-
-    res.json(posts);
+    res.json(posts ? posts : 'Author does not exist');
   } catch (error) {
     next(error);
   }
