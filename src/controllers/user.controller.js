@@ -24,7 +24,6 @@ exports.userCreate = [
   validateUser(),
   async (req, res, next) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.json(errors);
     }
@@ -42,18 +41,19 @@ exports.userCreate = [
 // TODO: auth
 exports.userUpdate = [
   async (req, res, next) => {
+    const inputFields = Object.keys(req.body);
+    validateUser(inputFields);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json(errors);
+    }
+
     try {
-      const inputFields = Object.keys(req.body);
-      validateUser(inputFields);
-
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.json(errors);
-      }
-
       const { user: userId } = req.params;
       const { body: userData } = req;
-      await updateUser(userId, userData);
+      const result = await updateUser(userId, userData);
+      if (!result) res.json('User not found');
 
       res.sendStatus(200);
     } catch (error) {

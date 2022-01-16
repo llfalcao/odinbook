@@ -21,7 +21,8 @@ exports.createUser = async (userData) => {
 };
 
 exports.updateUser = async (userId, userData) => {
-  await User.findById(userId).exec();
+  const user = await User.findById(userId).exec();
+  if (!user) return;
   await User.updateOne({ _id: userId }, userData).exec();
 };
 
