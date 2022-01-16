@@ -3,6 +3,7 @@ const {
   fetchPosts,
   fetchPost,
   createPost,
+  updatePost,
   validatePost,
 } = require('../services/posts');
 
@@ -27,6 +28,7 @@ exports.postDetail = async (req, res, next) => {
   }
 };
 
+// todo: auth
 exports.postCreate = [
   validatePost,
   async (req, res, next) => {
@@ -40,6 +42,34 @@ exports.postCreate = [
       res.sendStatus(200);
     } catch (error) {
       next(error);
+    }
+  },
+];
+
+// todo: auth
+exports.postUpdate = [
+  validatePost,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json(errors);
+    }
+
+    try {
+      const { post: id } = req.params;
+      const { body: post } = req;
+      const result = await updatePost(id, post);
+      if (result.matchedCount === 0) {
+        return res.json('Post not found');
+      }
+
+      res.sendStatus(200);
+    } catch (error) {
+      if (error.kind === 'ObjectId') {
+        res.json('Post not found');
+      } else {
+        next(error);
+      }
     }
   },
 ];
