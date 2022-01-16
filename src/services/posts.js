@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
+const { body } = require('express-validator');
 
 exports.fetchPosts = async (author) => {
   if (author) {
@@ -16,3 +17,17 @@ exports.fetchPosts = async (author) => {
 };
 
 exports.fetchPost = (postId) => Post.findOne({ _id: postId }).exec();
+
+// todo: link author
+exports.createPost = async (postData) => {
+  const post = new Post({ ...postData, created_at: new Date() });
+  await post.save();
+};
+
+exports.validatePost = [
+  body('body', 'Post required')
+    .trim()
+    .notEmpty()
+    .isLength({ max: 2000 })
+    .withMessage('Post too long'),
+];

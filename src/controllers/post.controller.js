@@ -1,5 +1,10 @@
 const { validationResult } = require('express-validator');
-const { fetchPosts, fetchPost } = require('../services/posts');
+const {
+  fetchPosts,
+  fetchPost,
+  createPost,
+  validatePost,
+} = require('../services/posts');
 
 exports.postList = async (req, res, next) => {
   try {
@@ -21,3 +26,20 @@ exports.postDetail = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.postCreate = [
+  validatePost,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json(errors);
+    }
+
+    try {
+      await createPost(req.body);
+      res.sendStatus(200);
+    } catch (error) {
+      next(error);
+    }
+  },
+];
