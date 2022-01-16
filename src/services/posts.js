@@ -27,6 +27,8 @@ exports.createPost = async (postData) => {
 exports.updatePost = (id, post) =>
   Post.updateOne({ _id: id }, post).exec();
 
+exports.deletePost = (id) => Post.deleteOne({ _id: id }).exec();
+
 exports.validatePost = [
   body('body', 'Post required')
     .trim()

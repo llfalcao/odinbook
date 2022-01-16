@@ -4,6 +4,7 @@ const {
   fetchPost,
   createPost,
   updatePost,
+  deletePost,
   validatePost,
 } = require('../services/posts');
 
@@ -73,3 +74,23 @@ exports.postUpdate = [
     }
   },
 ];
+
+// todo: auth
+exports.postDelete = async (req, res, next) => {
+  try {
+    const { post } = req.params;
+    const result = await deletePost(post);
+
+    if (result.deletedCount === 0) {
+      res.json('Post not found');
+    }
+
+    res.sendStatus(200);
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      res.json('Post not found');
+    } else {
+      next(error);
+    }
+  }
+};
