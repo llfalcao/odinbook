@@ -34,7 +34,10 @@ const UserSchema = new Schema({
       required: true,
     },
   },
-  profile_pic: String,
+  profile_pic: {
+    type: String,
+    default: 'https://i.imgur.com/nM4yoyw.jpg',
+  },
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
@@ -48,10 +51,6 @@ UserSchema.virtual('posts', {
   ref: 'Post',
   foreignField: 'user_id',
   localField: '_id',
-});
-
-UserSchema.virtual('url').get(function () {
-  return `/u/${this.username}`;
 });
 
 module.exports = model('User', UserSchema);

@@ -33,8 +33,4 @@ const CommentSchema = new Schema({
   ],
 });
 
-CommentSchema.virtual('url').get(function () {
-  return `/posts/${post_id}/${_id}`;
-});
-
 module.exports = model('Comment', CommentSchema);

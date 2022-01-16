@@ -18,10 +18,6 @@ const PostSchema = new Schema({
   liked_by: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
-PostSchema.virtual('url').get(function () {
-  return `/posts/${this._id}`;
-});
-
 PostSchema.virtual('comments', {
   ref: 'Comment',
   foreignField: 'post_id',
