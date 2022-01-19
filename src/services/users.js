@@ -34,7 +34,7 @@ exports.updateUser = async (userId, userData) => {
 exports.deleteUser = async (userId) =>
   await User.deleteOne({ _id: userId }).exec();
 
-exports.validateUser = (fields) => {
+exports.validateUserInput = (fields) => {
   const validations = {
     username: body('username', 'Username required')
       .trim()

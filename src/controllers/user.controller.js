@@ -3,10 +3,12 @@ const {
   fetchUser,
   createUser,
   deleteUser,
-  validateUser,
+  validateUserInput,
   updateUser,
 } = require('../services/users');
 const { validationResult } = require('express-validator');
+const { verifyAccessToken } = require('../services/auth');
+const { verifyUser } = require('../services/auth');
 
 exports.userList = (req, res, next) => {
   fetchUsers()
@@ -21,7 +23,7 @@ exports.userDetail = (req, res, next) => {
 };
 
 exports.userCreate = [
-  validateUser(),
+  validateUserInput(),
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,11 +40,12 @@ exports.userCreate = [
   },
 ];
 
-// TODO: auth
 exports.userUpdate = [
+  verifyAccessToken,
+  verifyUser,
   async (req, res, next) => {
     const inputFields = Object.keys(req.body);
-    validateUser(inputFields);
+    validateUserInput(inputFields);
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -64,22 +67,25 @@ exports.userUpdate = [
   },
 ];
 
-// todo: auth
-exports.userDelete = async (req, res, next) => {
-  try {
-    const { user } = req.params;
-    const result = await deleteUser(user);
+exports.userDelete = [
+  verifyAccessToken,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const { user } = req.params;
+      const result = await deleteUser(user);
 
-    if (result.deletedCount === 0) {
-      res.json('User not found');
-    }
+      if (result.deletedCount === 0) {
+        res.json('User not found');
+      }
 
-    res.sendStatus(200);
-  } catch (error) {
-    if (error.kind === 'ObjectId') {
-      return res.json('User not found');
-    } else {
-      next(error);
+      res.sendStatus(200);
+    } catch (error) {
+      if (error.kind === 'ObjectId') {
+        return res.json('User not found');
+      } else {
+        next(error);
+      }
     }
-  }
-};
+  },
+];
