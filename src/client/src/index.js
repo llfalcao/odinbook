@@ -9,6 +9,7 @@ import {
 import './styles/main.css';
 import App from './App';
 import LandingPage from './views/LandingPage';
+import Login from './views/Login';
 
 render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ render(
         <Route path="/odinbook" element={<App />}>
           <Route index element={<LandingPage />} />
         </Route>
+        <Route path="/odinbook/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
