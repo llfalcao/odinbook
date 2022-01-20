@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 function LandingPage() {
   return (
     <div className="landing">
-      <header className="landing__header">
-        <Link to="/odinbook" className="landing__brand">
-          odinbook
-        </Link>
-      </header>
+      <Header />
       <main className="landing__main">
         <h1 className="landing__headline">
           Connect with friends and the world around you on Odinbook.

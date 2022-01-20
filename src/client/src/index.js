@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import './styles/main.css';
 import App from './App';
+import NotFound from './views/NotFound';
 import LandingPage from './views/LandingPage';
 import Login from './views/Login';
 
@@ -20,6 +21,7 @@ render(
           <Route index element={<LandingPage />} />
         </Route>
         <Route path="/odinbook/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

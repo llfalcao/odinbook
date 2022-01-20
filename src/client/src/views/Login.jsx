@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 function Login() {
   return (
     <div>
+      <Header />
       <form>
         <div>
           <label htmlFor="username">Username</label>

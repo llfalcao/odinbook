@@ -1,17 +1,5 @@
 @import url('./base.css');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #eee;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #111;
-  }
-}
-
 .landing {
   height: 100vh;
   background-image: url('../../public/images/landing_bg_mobile.png');
@@ -26,11 +14,11 @@
   }
 }
 
-.landing__header {
+.header {
   padding: 0.5rem 1.5rem 0;
 }
 
-.landing__brand {
+.header__brand {
   color: #181818;
   font-weight: bold;
   font-size: 24px;
@@ -54,4 +42,12 @@
   padding: 0.5rem 2.3rem;
   border-radius: 4px;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.not-found .header__brand {
+  color: #ddd;
+}
+
+.not-found h1 {
+  margin: 1rem 1.5rem;
 }

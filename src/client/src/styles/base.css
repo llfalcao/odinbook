@@ -3,8 +3,23 @@
   padding: 0;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #eee;
+    --main-bg-color: #101112;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #111;
+    --main-bg-color: #f8f8f8;
+  }
+}
+
 body {
   margin: 0;
+  background: var(--main-bg-color);
   font-family: 'Oxygen', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
