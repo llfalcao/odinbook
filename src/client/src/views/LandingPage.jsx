@@ -8,12 +8,14 @@ function LandingPage() {
           odinbook
         </Link>
       </header>
-      <h1 className="landing__headline">
-        Connect with friends and the world around you on Odinbook.
-      </h1>
-      <button type="button" className="landing__cta">
-        Sign in
-      </button>
+      <main className="landing__main">
+        <h1 className="landing__headline">
+          Connect with friends and the world around you on Odinbook.
+        </h1>
+        <button type="button" className="landing__cta">
+          Sign in
+        </button>
+      </main>
     </div>
   );
 }
