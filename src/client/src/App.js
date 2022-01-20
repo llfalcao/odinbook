@@ -1,9 +1,9 @@
-import Home from './components/Home';
+import LandingPage from './views/LandingPage';
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <LandingPage />
     </div>
   );
 }
