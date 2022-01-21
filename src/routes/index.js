@@ -4,8 +4,8 @@ const postRouter = require('./posts');
 const loginRouter = require('./login');
 
 router.get('/', (req, res) => res.json('Odinbook'));
+router.get('/api', (req, res) => res.json('Odinbook API'));
 router.use('/login', loginRouter);
-router.get('/api', (req, res) => res.json('Auth Success'));
 router.use('/api/v1/users', userRouter);
 router.use('/api/v1/posts', postRouter);
 
