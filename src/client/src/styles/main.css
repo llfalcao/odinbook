@@ -1,6 +1,7 @@
 @import url('./base.css');
 
-.landing {
+.landing,
+.login {
   height: 100vh;
   background-image: url('../../public/images/landing_bg_mobile.png');
   background-size: cover;
@@ -8,7 +9,8 @@
 }
 
 @media (min-width: 420px) {
-  .landing {
+  .landing,
+  .login {
     background-image: url('../../public/images/landing_bg_desktop.jpg');
     background-position: bottom;
   }
@@ -41,7 +43,7 @@
   font-weight: bold;
   padding: 0.5rem 2.3rem;
   border-radius: 4px;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 2px #000;
 }
 
 .not-found .header__brand {
@@ -50,4 +52,66 @@
 
 .not-found h1 {
   margin: 1rem 1.5rem;
+}
+
+.login__form {
+  width: 60vw;
+  max-width: 280px;
+  margin: 5rem auto 0;
+  padding: 1.5rem;
+  background: var(--modal-bg-color);
+  box-shadow: 0 1px 4px #000;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: ce;
+}
+
+.login__formInput {
+  padding: 0.8rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 2px;
+  font-size: 14px;
+  background: transparent;
+  color: var(--form-input-text);
+  border: var(--form-border-color);
+  border-radius: 4px;
+}
+
+.login hr {
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+
+.login__btn {
+  padding: 0.7rem 0.8rem;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 4px;
+  transition: opacity 0.5s ease-out;
+}
+
+.login__btn:hover {
+  opacity: 0.8;
+}
+
+.login__logInBtn {
+  background-color: #1877f2;
+  margin-top: 0.5rem;
+}
+
+.login__logInBtn:focus {
+  outline: 2px solid #29487d;
+}
+
+.login__newAccountBtn {
+  background-color: #42b72a;
+  width: max-content;
+  text-decoration: none;
+  margin: 0 auto;
+}
+
+.login__newAccountBtn:focus {
+  outline: 2px solid #2b9217;
 }

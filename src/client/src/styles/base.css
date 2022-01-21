@@ -7,6 +7,9 @@
   :root {
     color: #eee;
     --main-bg-color: #101112;
+    --modal-bg-color: #222;
+    --form-input-text: #f8f8f8;
+    --form-border-color: 1px solid #333;
   }
 }
 
@@ -14,6 +17,9 @@
   :root {
     color: #111;
     --main-bg-color: #f8f8f8;
+    --modal-bg-color: #f8f8f8;
+    --form-input-text: #111;
+    --form-border-color: 1px solid rgb(221, 223, 226);
   }
 }
 
@@ -33,4 +39,8 @@ button,
 input {
   border: 0;
   font-family: inherit;
+}
+
+button {
+  cursor: pointer;
 }

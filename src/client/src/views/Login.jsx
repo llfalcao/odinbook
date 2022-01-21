@@ -1,28 +1,60 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 function Login() {
+  const [user, setUser] = useState({ username: '', password: '' });
+
+  const onChange = (e) => {
+    const nextState = { ...user };
+    nextState[e.target.name] = e.target.value;
+    setUser(nextState);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div>
+    <div className="login">
       <Header />
-      <form>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="Username"
-          />
-        </div>
+      <form className="login__form" onSubmit={onSubmit}>
+        <input
+          id="username"
+          className="login__formInput"
+          name="username"
+          type="text"
+          placeholder="Username"
+          value={user.username}
+          onChange={onChange}
+        />
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" />
-        </div>
+        <input
+          id="password"
+          className="login__formInput"
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={user.password}
+          onChange={onChange}
+        />
 
-        <button type="button">Login</button>
-        <Link to="/odinbook/signup">No account? Create one!</Link>
+        <button
+          type="submit"
+          className="login__btn login__logInBtn"
+          onClick={onSubmit}
+        >
+          Log In
+        </button>
+
+        <hr />
+
+        <Link
+          to="/odinbook/signup"
+          className="login__btn login__newAccountBtn"
+        >
+          Create new account
+        </Link>
       </form>
     </div>
   );
