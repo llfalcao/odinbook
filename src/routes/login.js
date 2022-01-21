@@ -1,23 +1,19 @@
-const bcrypt = require('bcrypt');
-const { generateAccessToken } = require('../services/auth');
-const { fetchUser } = require('../services/users');
+const { login } = require('../services/auth');
 const { Router } = require('express');
+const { body, validationResult } = require('express-validator');
 const router = Router();
 
-router.post('/', async (req, res, next) => {
-  try {
-    let user = await fetchUser(req.body.username);
-    if (!user) res.sendStatus(404);
-
-    const hash = await bcrypt.hash(req.body.password, 10);
-    user = { id: user._id, username: user.username, password: hash };
-
-    const accessToken = generateAccessToken(user);
-    res.locals.accessToken = accessToken;
-    res.json({ accessToken });
-  } catch (error) {
-    next(error);
-  }
-});
+router.post('/', [
+  body('username').notEmpty(),
+  body('password').notEmpty(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.sendStatus(400);
+    }
+    next();
+  },
+  login,
+]);
 
 module.exports = router;

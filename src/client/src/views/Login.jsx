@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../api';
 import Header from '../components/Header';
 
 function Login() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ username: '', password: '' });
 
   const onChange = (e) => {
@@ -11,8 +13,20 @@ function Login() {
     setUser(nextState);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    const api = login;
+    const response = await fetch(api.url, {
+      headers: api.headers,
+      method: api.method,
+      body: JSON.stringify(user),
+    });
+    const data = await response.json();
+    if (data) {
+      localStorage.setItem('token', data.accessToken);
+      navigate('/odinbook');
+    }
+    // todo: show errors
   };
 
   return (

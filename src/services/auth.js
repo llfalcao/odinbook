@@ -1,9 +1,11 @@
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-exports.generateAccessToken = (user) =>
+const generateAccessToken = (user) =>
   jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 
-exports.verifyAccessToken = (req, res, next) => {
+const verifyAccessToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) return res.sendStatus(400);
@@ -14,7 +16,7 @@ exports.verifyAccessToken = (req, res, next) => {
   });
 };
 
-exports.verifyUser = (req, res, next) => {
+const verifyUser = (req, res, next) => {
   const auth = req.headers.authorization;
   const token = auth && auth.split(' ')[1];
 
@@ -24,4 +26,30 @@ exports.verifyUser = (req, res, next) => {
     }
     next();
   });
+};
+
+const login = async (req, res, next) => {
+  try {
+    let user = await User.findOne({
+      username: req.body.username,
+    }).exec();
+    if (!user) return res.sendStatus(404);
+
+    const hash = await bcrypt.hash(req.body.password, 10);
+    const isMatch = await bcrypt.compare(user.password, hash);
+    if (!isMatch) return res.sendStatus(403);
+
+    user = { id: user._id, username: user.username };
+    const accessToken = generateAccessToken(user);
+
+    res.json({ accessToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  verifyAccessToken,
+  verifyUser,
+  login,
 };
