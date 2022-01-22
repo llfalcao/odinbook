@@ -21,9 +21,13 @@
 }
 
 .header__brand {
-  color: #181818;
+  color: var(--main-text-color);
   font-weight: bold;
   font-size: 24px;
+}
+
+.landing .header__brand {
+  color: var(--text-reverse-color);
 }
 
 .landing__main {
@@ -124,4 +128,14 @@
 
 .login__newAccountBtn:focus {
   outline: 2px solid #2b9217;
+}
+
+.home main {
+  padding: 0 1rem;
+}
+
+.home h1 {
+  font-weight: normal;
+  font-size: 16px;
+  margin-top: 1.5rem;
 }

@@ -4,10 +4,7 @@ const User = require('../models/User');
 require('../models/Post');
 
 exports.fetchUsers = () =>
-  User.find({}, { password: 0 })
-    .populate('posts')
-    .populate('friends')
-    .exec();
+  User.find({}, { password: 0 }).populate('posts').populate('friends').exec();
 
 exports.fetchUser = (username) =>
   User.findOne({ username }, { password: 0 })
@@ -42,9 +39,7 @@ exports.validateUserInput = (fields) => {
       .withMessage('Username is too short')
       .custom(async (username) => {
         if (!username.match(/^[A-Za-z0-9]+$/)) {
-          throw new Error(
-            'Username must not contain special characters',
-          );
+          throw new Error('Username must not contain special characters');
         }
         const isMatch = await User.findOne({ username }).exec();
         if (isMatch) throw new Error('Username unavailable');
@@ -65,21 +60,15 @@ exports.validateUserInput = (fields) => {
       },
     ),
 
-    firstName: body('first_name', 'First name required')
-      .trim()
-      .notEmpty(),
+    firstName: body('first_name', 'First name required').trim().notEmpty(),
 
-    lastName: body('last_name', 'Last name required')
-      .trim()
-      .notEmpty(),
+    lastName: body('last_name', 'Last name required').trim().notEmpty(),
 
     dateOfBirth: body('date_of_birth', 'Date of birth required')
       .trim()
       .notEmpty(),
 
-    country: body('location.country', 'Country required')
-      .trim()
-      .notEmpty(),
+    country: body('location.country', 'Country required').trim().notEmpty(),
   };
 
   // Validate all fields (usually on user creation)

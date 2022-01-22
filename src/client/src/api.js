@@ -28,3 +28,13 @@ export const login = {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
 };
+
+const token = localStorage.getItem('token');
+export const auth = {
+  url: `${rootUri}/auth`,
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  },
+};
