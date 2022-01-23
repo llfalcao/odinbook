@@ -58,6 +58,10 @@
   margin: 1rem 1.5rem;
 }
 
+.login .header__brand {
+  color: var(--text-reverse-color);
+}
+
 .login__form {
   width: 60vw;
   max-width: 280px;

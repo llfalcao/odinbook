@@ -29,12 +29,25 @@ export const login = {
   headers: { 'Content-Type': 'application/json' },
 };
 
-const token = localStorage.getItem('token');
 export const auth = {
   url: `${rootUri}/auth`,
   method: 'GET',
   headers: {
-    Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json',
   },
 };
+
+export async function verifyJWT() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  const response = await fetch(auth.url, {
+    method: auth.method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...auth.headers,
+    },
+  });
+
+  return await response.json();
+}

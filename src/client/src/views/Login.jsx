@@ -1,18 +1,24 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { login } from '../api';
 import Header from '../components/Header';
 
-function Login() {
+function Login({ currentUser, authenticate, status }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
 
+  if (currentUser) {
+    return <Navigate to="/odinbook" />;
+  }
+
+  if (status === 'loading') {
+    return <></>;
+  }
+
   const handleErrors = (field, state) => {
     const description =
-      field === 'username'
-        ? 'Username required.'
-        : 'Password required.';
+      field === 'username' ? 'Username required.' : 'Password required.';
     if (state[field].length === 0) {
       setErrors({ ...errors, [field]: description });
     } else {
@@ -27,14 +33,21 @@ function Login() {
     handleErrors(name, nextState);
   };
 
-  const isEmpty = () =>
-    user.username.length === 0 || user.password.length === 0
-      ? true
-      : false;
+  const hasEmptyFields = () => {
+    const err = {};
+    if (user.username.length === 0) {
+      err.username = 'Username required.';
+    }
+    if (user.password.length === 0) {
+      err.password = 'Password required.';
+    }
+    setErrors(err);
+    return Object.keys(err).length !== 0;
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (isEmpty()) return;
+    if (hasEmptyFields()) return;
 
     const api = login;
     const response = await fetch(api.url, {
@@ -53,6 +66,7 @@ function Login() {
 
     if (accessToken) {
       localStorage.setItem('token', accessToken);
+      await authenticate();
       navigate('/odinbook');
     }
   };
@@ -97,10 +111,7 @@ function Login() {
 
         <hr />
 
-        <Link
-          to="/odinbook/signup"
-          className="login__btn login__newAccountBtn"
-        >
+        <Link to="/odinbook/signup" className="login__btn login__newAccountBtn">
           Create new account
         </Link>
       </form>

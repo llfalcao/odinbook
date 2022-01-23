@@ -1,39 +1,42 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { auth } from './api';
-import NotFound from './views/NotFound';
-import LandingPage from './views/LandingPage';
-import Login from './views/Login';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { verifyJWT } from './api';
 import Home from './views/Home';
+import Login from './views/Login';
+import NotFound from './views/NotFound';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState();
+  const [user, setUser] = useState(null);
+  const [status, setStatus] = useState('loading');
 
-  useEffect(
-    () =>
-      (async () => {
-        const token = localStorage.getItem('token');
-        if (!token) return;
+  const userAuth = async () => {
+    const userData = await verifyJWT();
+    if (userData) {
+      setUser(userData);
+      setStatus('successful');
+    } else {
+      setStatus('failed');
+    }
+  };
 
-        const response = await fetch(auth.url, {
-          headers: auth.headers,
-          method: auth.method,
-        });
-        const data = await response.json();
-        setCurrentUser(data);
-      })(),
-    [],
-  );
+  useEffect(() => userAuth(), []);
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/odinbook" />}></Route>
-        <Route
-          path="/odinbook"
-          element={currentUser ? <Home user={currentUser} /> : <LandingPage />}
-        />
-        <Route path="/odinbook/login" element={<Login />} />
+        <Route path="/odinbook">
+          <Route index element={<Home user={user} status={status} />} />
+          <Route
+            path="login"
+            element={
+              <Login
+                currentUser={user}
+                authenticate={userAuth}
+                status={status}
+              />
+            }
+          />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
