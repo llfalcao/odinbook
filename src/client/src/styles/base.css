@@ -6,7 +6,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color: #eee;
-    --main-bg-color: #101112;
+    --main-bg-color: #18191a;
+    --secondary-bg-color: #222;
     --main-text-color: #eee;
     --text-reverse-color: #111;
     --modal-bg-color: #222;
@@ -19,6 +20,7 @@
   :root {
     color: #111;
     --main-bg-color: #f8f8f8;
+    --secondary-bg-color: #ffffff;
     --main-text-color: #111;
     --text-reverse-color: #eee;
     --modal-bg-color: #f8f8f8;

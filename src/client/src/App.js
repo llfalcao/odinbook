@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { verifyJWT } from './api';
 import Home from './views/Home';
 import Login from './views/Login';
@@ -24,6 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/odinbook" />} />
         <Route path="/odinbook">
           <Route index element={<Home user={user} status={status} />} />
           <Route
