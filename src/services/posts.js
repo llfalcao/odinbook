@@ -4,10 +4,7 @@ const { body } = require('express-validator');
 
 exports.fetchPosts = async (author) => {
   if (author) {
-    let user = await User.findOne(
-      { username: author },
-      { _id: 1 },
-    ).exec();
+    let user = await User.findOne({ username: author }, { _id: 1 }).exec();
 
     if (!user) return;
     return await Post.find({ user_id: user._id }).exec();
@@ -18,14 +15,16 @@ exports.fetchPosts = async (author) => {
 
 exports.fetchPost = (postId) => Post.findOne({ _id: postId }).exec();
 
-// todo: link author
-exports.createPost = async (postData) => {
-  const post = new Post({ ...postData, created_at: new Date() });
+exports.createPost = async (user, postData) => {
+  const post = new Post({
+    user_id: user.id,
+    created_at: new Date(),
+    ...postData,
+  });
   await post.save();
 };
 
-exports.updatePost = (id, post) =>
-  Post.updateOne({ _id: id }, post).exec();
+exports.updatePost = (id, post) => Post.updateOne({ _id: id }, post).exec();
 
 exports.deletePost = (id) => Post.deleteOne({ _id: id }).exec();
 

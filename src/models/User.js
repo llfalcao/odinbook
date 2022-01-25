@@ -41,8 +41,6 @@ const UserSchema = new Schema({
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
-UserSchema.set('toJSON', { virtuals: true });
-
 UserSchema.virtual('full_name').get(function () {
   return `${this.first_name} ${this.last_name}`;
 });
@@ -52,5 +50,8 @@ UserSchema.virtual('posts', {
   foreignField: 'user_id',
   localField: '_id',
 });
+
+UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toJSON', { virtuals: true });
 
 module.exports = model('User', UserSchema);

@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const { verifyAccessToken } = require('../services/auth');
 const {
   fetchPosts,
   fetchPost,
@@ -27,8 +28,8 @@ exports.postDetail = async (req, res, next) => {
   }
 };
 
-// todo: auth
 exports.postCreate = [
+  verifyAccessToken,
   validatePost,
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -37,7 +38,7 @@ exports.postCreate = [
     }
 
     try {
-      await createPost(req.body);
+      await createPost(req.user, req.body);
       res.sendStatus(200);
     } catch (error) {
       next(error);

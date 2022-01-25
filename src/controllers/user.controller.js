@@ -2,9 +2,10 @@ const {
   fetchUsers,
   fetchUser,
   createUser,
-  deleteUser,
-  validateUserInput,
   updateUser,
+  deleteUser,
+  fetchUserFeed,
+  validateUserInput,
 } = require('../services/users');
 const { validationResult } = require('express-validator');
 const { verifyAccessToken } = require('../services/auth');
@@ -21,6 +22,14 @@ exports.userDetail = (req, res, next) => {
     .then((user) => res.json(user ? user : 'User not found'))
     .catch((error) => next(error));
 };
+
+exports.userFeed = [
+  verifyAccessToken,
+  (req, res, next) =>
+    fetchUserFeed(req.params.user)
+      .then((feed) => res.json(feed ? feed : 'Something went wrong'))
+      .catch((error) => next(error)),
+];
 
 exports.userCreate = [
   validateUserInput(),

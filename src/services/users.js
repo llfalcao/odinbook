@@ -1,6 +1,7 @@
 const { body } = require('express-validator');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Post = require('../models/Post');
 require('../models/Post');
 
 exports.fetchUsers = () =>
@@ -30,6 +31,16 @@ exports.updateUser = async (userId, userData) => {
 
 exports.deleteUser = async (userId) =>
   await User.deleteOne({ _id: userId }).exec();
+
+exports.fetchUserFeed = async (username) => {
+  const user = await User.findOne({ username }, { friends: 1 }).exec();
+  const connections = [user._id, ...user.friends];
+  const feed = await Post.find({ user_id: { $in: connections } })
+    .populate({ path: 'user_id', select: 'first_name last_name profile_pic' })
+    .sort({ created_at: -1 })
+    .exec();
+  return feed;
+};
 
 exports.validateUserInput = (fields) => {
   const validations = {

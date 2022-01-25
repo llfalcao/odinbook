@@ -31,22 +31,19 @@ const verifyUser = (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    let user = await User.findOne({
-      username: req.body.username,
-    }).exec();
-    if (!user)
-      return res
-        .status(404)
-        .json({ errors: { username: 'Username not found.' } });
-
-    const hash = await bcrypt.hash(req.body.password, 10);
-    const isMatch = await bcrypt.compare(user.password, hash);
-    if (!isMatch)
-      return res.status(403).json({
-        errors: {
-          password: 'The password you’ve entered is incorrect.',
-        },
+    let user = await User.findOne({ username: req.body.username }).exec();
+    if (!user) {
+      return res.status(404).json({
+        errors: { username: 'Username not found.' },
       });
+    }
+
+    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!isMatch) {
+      return res.status(403).json({
+        errors: { password: "The password you've entered is incorrect." },
+      });
+    }
 
     user = { id: user._id, username: user.username };
     const accessToken = generateAccessToken(user);
