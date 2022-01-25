@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { postApis } from '../api';
+import { userApis } from '../api';
 import Header from '../components/Header';
 import Post from '../components/Post';
 import LandingPage from './LandingPage';
@@ -10,13 +10,13 @@ function Home({ user, status }) {
   useEffect(() => {
     async function fetchPosts() {
       if (!user) return;
-
-      const api = postApis.read;
-      const response = await fetch(api.url, {
+      const api = userApis.read;
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${api.url}/${user.username}/feed`, {
         method: api.method,
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      console.log(data);
       setPosts(data);
     }
     fetchPosts();
@@ -33,7 +33,14 @@ function Home({ user, status }) {
         <section className="posts">
           {posts &&
             posts.map((post) => {
-              return <Post key={post._id} body={post.body} />;
+              return (
+                <Post
+                  key={post._id}
+                  author={post.user_id}
+                  date={post.created_at}
+                  body={post.body}
+                />
+              );
             })}
         </section>
       </main>
