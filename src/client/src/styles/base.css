@@ -13,6 +13,8 @@
     --modal-bg-color: #222;
     --form-input-text: #f8f8f8;
     --form-border-color: 1px solid #333;
+    --btn-text: #c4c4c4;
+    --btn-bg: #c4c4c44b;
   }
 }
 
@@ -26,6 +28,8 @@
     --modal-bg-color: #f8f8f8;
     --form-input-text: #111;
     --form-border-color: 1px solid rgb(221, 223, 226);
+    --btn-text: #111;
+    --btn-bg: #c4c4c480;
   }
 }
 
@@ -49,4 +53,6 @@ input {
 
 button {
   cursor: pointer;
+  font-weight: bold;
+  background: transparent;
 }
