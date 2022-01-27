@@ -236,6 +236,14 @@
   height: 16px;
 }
 
+.post__btn--likeActive {
+  color: #1777f2;
+}
+
+.post__btn--likeActive svg {
+  stroke: #1777f2;
+}
+
 .post__commentFieldContainer {
   display: flex;
   align-items: center;
@@ -264,4 +272,21 @@
   background: #c4c4c425;
   color: var(--main-text-color);
   flex-grow: 1;
+}
+
+.post__counters--like {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 1rem;
+  font-size: 12px;
+}
+
+.post__counters--like svg {
+  background: #1777f2;
+  padding: 4px 4px 4px;
+  border-radius: 100%;
+  fill: #fff;
+  stroke: none;
+  transform: scale(0.8);
 }

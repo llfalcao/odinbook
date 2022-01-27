@@ -73,3 +73,15 @@ export const postApis = {
     headers: { 'Content-Type': 'application/json' },
   },
 };
+
+export const likeApis = {
+  read: {
+    url: `${apiBasePath}/likes`,
+    method: 'GET',
+  },
+  create: {
+    url: `${apiBasePath}/likes`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  },
+};

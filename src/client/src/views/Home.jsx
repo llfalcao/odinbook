@@ -36,9 +36,11 @@ function Home({ user, status }) {
               return (
                 <Post
                   key={post._id}
+                  postId={post._id}
                   author={post.user_id}
                   date={post.created_at}
                   body={post.body}
+                  userId={user.id}
                 />
               );
             })}

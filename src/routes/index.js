@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const loginRouter = require('./login');
 const userRouter = require('./users');
 const postRouter = require('./posts');
-const loginRouter = require('./login');
+const likeRouter = require('./likes.js');
 const { verifyAccessToken } = require('../services/auth');
 const { fetchUser } = require('../services/users');
 
@@ -15,5 +16,6 @@ router.get('/api', (req, res) => res.json('Odinbook API'));
 router.use('/login', loginRouter);
 router.use('/api/v1/users', userRouter);
 router.use('/api/v1/posts', postRouter);
+router.use('/api/v1/likes', likeRouter);
 
 module.exports = router;
