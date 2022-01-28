@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { userApis } from '../api';
 import Header from '../components/Header';
 import Post from '../components/Post';
@@ -28,7 +29,14 @@ function Home({ user, status }) {
     <div className="home">
       <Header />
       <main>
-        <h1>Welcome back, {user.first_name}!</h1>
+        <div className="new-post__form">
+          <div className="new-post__profilePicture">
+            <img src={user.profile_pic} alt="" />
+          </div>
+          <Link to="/odinbook/new-post" className="new-post__link">
+            {`What's on your mind, ${user.first_name}?`}
+          </Link>
+        </div>
 
         <section className="posts">
           {posts &&

@@ -58,7 +58,7 @@ export const postApis = {
     method: 'GET',
   },
   create: {
-    url: `${apiBasePath}/posts`,
+    url: `${apiBasePath}/posts/create`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
   },

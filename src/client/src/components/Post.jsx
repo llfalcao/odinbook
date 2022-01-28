@@ -102,8 +102,8 @@ export default function Post({ postId, author, date, body }) {
           <input
             className="comment__body"
             type="text"
-            name="body"
-            placeholder={`What's on your mind, ${author.first_name}?`}
+            name="commentBody"
+            placeholder="Write a comment..."
           />
         </div>
       </div>

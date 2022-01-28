@@ -4,6 +4,7 @@ import Home from './views/Home';
 import Login from './views/Login';
 import NotFound from './views/NotFound';
 import { useEffect, useState } from 'react';
+import PostCreator from './views/PostCreator';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Navigate to="/odinbook" />} />
         <Route path="/odinbook">
           <Route index element={<Home user={user} status={status} />} />
+          <Route path="new-post" element={<PostCreator user={user} />} />
           <Route
             path="login"
             element={
