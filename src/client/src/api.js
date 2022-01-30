@@ -85,3 +85,15 @@ export const likeApis = {
     headers: { 'Content-Type': 'application/json' },
   },
 };
+
+export const commentApis = {
+  read: {
+    url: `${apiBasePath}/comments`,
+    method: 'GET',
+  },
+  create: {
+    url: `${apiBasePath}/comments/create`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  },
+};

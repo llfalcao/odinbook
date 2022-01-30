@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-import { likeApis } from '../api';
+import { commentApis, likeApis } from '../api';
 import { LikeIcon, CommentIcon } from '../components/Icons';
 
 async function fetchLikes(post) {
@@ -14,7 +14,7 @@ async function fetchLikes(post) {
 
 async function toggleLike(post, isLiked) {
   const api = likeApis.create;
-  const response = await fetch(`${api.url}/${post}`, {
+  return await fetch(`${api.url}/${post}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       ...api.headers,
@@ -22,11 +22,23 @@ async function toggleLike(post, isLiked) {
     method: api.method,
     body: JSON.stringify({ active: !isLiked }),
   });
-  return response;
+}
+
+async function submitComment(comment) {
+  const api = commentApis.create;
+  return await fetch(`${api.url}?post=${comment.post}`, {
+    method: api.method,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      ...api.headers,
+    },
+    body: JSON.stringify(comment),
+  });
 }
 
 export default function Post({ postId, author, date, body }) {
   const [postData, setPostData] = useState({});
+  const [comment, setComment] = useState({ post: postId, text: '' });
 
   useEffect(() => {
     // Fetch post likes
@@ -52,6 +64,34 @@ export default function Post({ postId, author, date, body }) {
       isLiked: !isLiked,
       likeCount: isLiked ? likeCount - 1 : likeCount + 1,
     }));
+  }
+
+  function onChange(e) {
+    if (e.target.value === '') {
+      e.target.removeAttribute('style');
+    } else {
+      e.target.style.height = 'auto';
+      e.target.style.height = `${e.target.scrollHeight}px`;
+    }
+    setComment({ ...comment, text: e.target.value });
+  }
+
+  async function handleCommentSubmission() {
+    await submitComment(comment);
+    setComment({ ...comment, text: '' });
+  }
+
+  function onEnterPress(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      handleCommentSubmission();
+    }
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    if (comment.text === '') return;
+    handleCommentSubmission();
   }
 
   return (
@@ -94,19 +134,31 @@ export default function Post({ postId, author, date, body }) {
           </button>
         </div>
         <hr className="hr" />
-
-        <div className="post__commentFieldContainer">
-          <div className="comment__profilePicture">
-            <img src={author.profile_pic} alt="" />
-          </div>
-          <input
-            className="comment__body"
-            type="text"
-            name="commentBody"
-            placeholder="Write a comment..."
-          />
-        </div>
       </div>
+
+      <form className="post__commentFieldContainer">
+        <div className="comment__profilePicture">
+          <img src={author.profile_pic} alt="" />
+        </div>
+        <div className="comment__textareaContainer">
+          <textarea
+            className="comment__textarea"
+            placeholder="Write a comment..."
+            onKeyDown={onEnterPress}
+            onChange={onChange}
+            value={comment.text}
+          />
+          <button
+            className="comment__sendBtn"
+            type="submit"
+            onClick={onSubmit}
+            aria-label="Submit comment"
+            hidden={!comment.text}
+          >
+            Press enter to send
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

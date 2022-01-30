@@ -47,7 +47,8 @@ a:not(:hover) {
 }
 
 button,
-input {
+input,
+textarea {
   border: 0;
   font-family: inherit;
 }
