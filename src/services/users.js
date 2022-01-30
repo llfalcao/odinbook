@@ -3,15 +3,16 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Post = require('../models/Post');
 require('../models/Post');
+const mongoose = require('mongoose');
 
 exports.fetchUsers = () =>
-  User.find({}, { password: 0 }).populate('posts').populate('friends').exec();
+  User.find({}, { password: 0 }).populate('friends').exec();
 
 exports.fetchUser = (username) =>
-  User.findOne({ username }, { password: 0 })
-    .populate('posts')
-    .populate('friends')
-    .exec();
+  User.findOne({ username }, { password: 0 }).populate('friends').exec();
+
+exports.fetchUserById = (userId) =>
+  User.findById(userId, { password: 0 }).populate('friends').exec();
 
 exports.createUser = async (userData) => {
   const hash = await bcrypt.hash(userData.password, 10);
@@ -36,7 +37,10 @@ exports.fetchUserFeed = async (username) => {
   const user = await User.findOne({ username }, { friends: 1 }).exec();
   const connections = [user._id, ...user.friends];
   const feed = await Post.find({ user_id: { $in: connections } })
-    .populate({ path: 'user_id', select: 'first_name last_name profile_pic' })
+    .populate({
+      path: 'user_id',
+      select: 'first_name last_name profile_pic username',
+    })
     .sort({ created_at: -1 })
     .exec();
   return feed;

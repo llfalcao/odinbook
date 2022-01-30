@@ -6,15 +6,22 @@ const {
   deleteUser,
   fetchUserFeed,
   validateUserInput,
+  fetchUserById,
 } = require('../services/users');
 const { validationResult } = require('express-validator');
 const { verifyAccessToken } = require('../services/auth');
 const { verifyUser } = require('../services/auth');
 
 exports.userList = (req, res, next) => {
-  fetchUsers()
-    .then((users) => res.json(users))
-    .catch((error) => next(error));
+  if (typeof req.query.id !== 'undefined') {
+    fetchUserById(req.query.id)
+      .then((user) => res.json(user ? user : 'User not found.'))
+      .catch((error) => next(error));
+  } else {
+    fetchUsers()
+      .then((users) => res.json(users))
+      .catch((error) => next(error));
+  }
 };
 
 exports.userDetail = (req, res, next) => {
