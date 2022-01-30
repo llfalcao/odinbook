@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --blue: #2374e1;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color: #eee;
