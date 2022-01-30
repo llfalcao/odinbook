@@ -1,19 +1,23 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { verifyJWT } from './api';
+import { verifyJWT } from './api/auth';
+import RequireAuth from './auth';
 import Home from './views/Home';
 import Login from './views/Login';
 import NotFound from './views/NotFound';
-import { useEffect, useState } from 'react';
 import PostCreator from './views/PostCreator';
+import PostViewer from './views/PostViewer';
 
 function App() {
   const [user, setUser] = useState(null);
   const [status, setStatus] = useState('loading');
+  const [token, setToken] = useState(null);
 
   const userAuth = async () => {
     const userData = await verifyJWT();
     if (userData) {
       setUser(userData);
+      setToken(localStorage.getItem('token'));
       setStatus('successful');
     } else {
       setStatus('failed');
@@ -27,19 +31,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/odinbook" />} />
         <Route path="/odinbook">
-          <Route index element={<Home user={user} status={status} />} />
-          <Route path="new-post" element={<PostCreator user={user} />} />
           <Route
             path="login"
             element={
-              <Login
-                currentUser={user}
-                authenticate={userAuth}
-                status={status}
-              />
+              <Login authenticate={userAuth} status={status} token={token} />
             }
           />
+
+          <Route
+            index
+            element={<Home user={user} status={status} token={token} />}
+          />
+          <Route element={<RequireAuth token={token} />}>
+            <Route path="new-post" element={<PostCreator user={user} />} />
+            <Route path="p/:post" element={<PostViewer user={user} />} />
+          </Route>
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

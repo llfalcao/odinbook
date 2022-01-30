@@ -15,21 +15,6 @@ export const auth = {
   },
 };
 
-export async function verifyJWT() {
-  const token = localStorage.getItem('token');
-  if (!token) return;
-
-  const response = await fetch(auth.url, {
-    method: auth.method,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      ...auth.headers,
-    },
-  });
-
-  return await response.json();
-}
-
 export const userApis = {
   read: {
     url: `${apiBasePath}/users`,
