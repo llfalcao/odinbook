@@ -15,22 +15,13 @@ const CommentSchema = new Schema({
     type: String,
     required: true,
   },
-  depth: {
-    type: Number,
+  created_at: {
+    type: Date,
     required: true,
-    default: 0,
   },
-  parent_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'Comment',
-    default: null,
+  updated_at: {
+    type: Date,
   },
-  children: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Comment',
-    },
-  ],
 });
 
 module.exports = model('Comment', CommentSchema);

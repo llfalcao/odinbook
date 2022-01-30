@@ -3,6 +3,7 @@ const loginRouter = require('./login');
 const userRouter = require('./users');
 const postRouter = require('./posts');
 const likeRouter = require('./likes.js');
+const commentRouter = require('./comments.js');
 const { verifyAccessToken } = require('../services/auth');
 const { fetchUser } = require('../services/users');
 
@@ -17,5 +18,6 @@ router.use('/login', loginRouter);
 router.use('/api/v1/users', userRouter);
 router.use('/api/v1/posts', postRouter);
 router.use('/api/v1/likes', likeRouter);
+router.use('/api/v1/comments', commentRouter);
 
 module.exports = router;
