@@ -42,7 +42,7 @@ function App() {
             index
             element={<Home user={user} status={status} token={token} />}
           />
-          <Route element={<RequireAuth token={token} />}>
+          <Route element={<RequireAuth status={status} token={token} />}>
             <Route path="new-post" element={<PostCreator user={user} />} />
             <Route path="p/:post" element={<PostViewer user={user} />} />
           </Route>
