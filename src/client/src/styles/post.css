@@ -121,8 +121,10 @@
 .comment__profilePicture {
   background: #555;
   border-radius: 100%;
-  width: 2.2rem;
-  height: 2.2rem;
+  min-width: 2.2rem;
+  max-width: 2.2rem;
+  min-height: 2.2rem;
+  max-height: 2.2rem;
   overflow: hidden;
 }
 
@@ -195,15 +197,24 @@
 }
 
 .post-form__submitBtn {
-  background-color: #4080ff;
+  background-color: #2374e1;
   color: #fafafa;
   padding: 0.5rem;
   margin-top: 1rem;
   border-radius: 4px;
   font-size: 16px;
+  transition: 0.15s ease-out;
 }
 
 .post-form__submitBtn:hover,
 .post-form__submitBtn:disabled {
+  background-color: #333;
   opacity: 0.8;
+}
+
+.view-comments {
+  font-size: 14px;
+  color: var(--blue);
+  display: block;
+  margin-top: 0.5rem;
 }
