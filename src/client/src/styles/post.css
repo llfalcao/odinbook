@@ -2,6 +2,10 @@
   margin: 1rem auto 0;
 }
 
+.post__viewer {
+  padding: 0 1rem;
+}
+
 .post {
   background-color: var(--secondary-bg-color);
   padding: 1rem;

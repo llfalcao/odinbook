@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { login } from '../api';
+import { handleLogin } from '../api/auth';
 import Header from '../components/Header';
 
-function Login({ currentUser, authenticate, status }) {
+export default function Login({ authenticate, status, token }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
 
-  if (currentUser) {
+  const currentToken = localStorage.getItem('token');
+  if (currentToken && currentToken === token) {
     return <Navigate to="/odinbook" />;
   }
 
@@ -49,14 +50,7 @@ function Login({ currentUser, authenticate, status }) {
     e.preventDefault();
     if (hasEmptyFields()) return;
 
-    const api = login;
-    const response = await fetch(api.url, {
-      headers: api.headers,
-      method: api.method,
-      body: JSON.stringify(user),
-    });
-    const { accessToken, errors } = await response.json();
-
+    const { accessToken, errors } = await handleLogin(user);
     if (errors) {
       Object.entries(errors).forEach(([key, value]) =>
         setErrors({ ...errors, [key]: value }),
@@ -118,5 +112,3 @@ function Login({ currentUser, authenticate, status }) {
     </div>
   );
 }
-
-export default Login;

@@ -46,6 +46,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  list-style: none;
+}
+
 a:not(:hover) {
   text-decoration: none;
 }
@@ -61,4 +65,15 @@ button {
   cursor: pointer;
   font-weight: bold;
   background: transparent;
+}
+
+main {
+  padding: 1rem;
+}
+
+@media (min-width: 600px) {
+  main {
+    max-width: 600px;
+    margin: 1rem auto;
+  }
 }

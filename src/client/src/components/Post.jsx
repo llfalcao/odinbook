@@ -1,48 +1,17 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-import { commentApis, likeApis } from '../api';
+import { Link } from 'react-router-dom';
 import { LikeIcon, CommentIcon } from '../components/Icons';
+import { fetchLikes, toggleLike } from '../api/likes';
+import { submitComment } from '../api/comments';
 
-async function fetchLikes(post) {
-  const api = likeApis.read;
-  const response = await fetch(`${api.url}/${post}`, {
-    headers: api.headers,
-    method: api.method,
-  });
-  return await response.json();
-}
-
-async function toggleLike(post, isLiked) {
-  const api = likeApis.create;
-  return await fetch(`${api.url}/${post}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      ...api.headers,
-    },
-    method: api.method,
-    body: JSON.stringify({ active: !isLiked }),
-  });
-}
-
-async function submitComment(comment) {
-  const api = commentApis.create;
-  return await fetch(`${api.url}?post=${comment.post}`, {
-    method: api.method,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      ...api.headers,
-    },
-    body: JSON.stringify(comment),
-  });
-}
-
-export default function Post({ postId, author, date, body }) {
+export default function Post(props) {
+  const { postId, author, date, body, linkToComments, children } = props;
   const [postData, setPostData] = useState({});
   const [comment, setComment] = useState({ post: postId, text: '' });
-
-  useEffect(() => {
-    // Fetch post likes
-    (async () =>
+  // Fetch post likes
+  useEffect(
+    () =>
       fetchLikes(postId).then((likes) =>
         setPostData((postData) => ({
           ...postData,
@@ -50,8 +19,9 @@ export default function Post({ postId, author, date, body }) {
           likeCount: likes.length,
           likes,
         })),
-      ))();
-  }, [author.id, postId]);
+      ),
+    [author.id, postId],
+  );
 
   // Handle like button click
   async function onLike() {
@@ -66,6 +36,7 @@ export default function Post({ postId, author, date, body }) {
     }));
   }
 
+  // Comment input
   function onChange(e) {
     if (e.target.value === '') {
       e.target.removeAttribute('style');
@@ -79,6 +50,7 @@ export default function Post({ postId, author, date, body }) {
   async function handleCommentSubmission() {
     await submitComment(comment);
     setComment({ ...comment, text: '' });
+    document.querySelector('textarea:focus').removeAttribute('style');
   }
 
   function onEnterPress(e) {
@@ -159,6 +131,14 @@ export default function Post({ postId, author, date, body }) {
           </button>
         </div>
       </form>
+
+      {linkToComments ? (
+        <Link to={`p/${postId}`} className="view-comments">
+          View comments
+        </Link>
+      ) : null}
+
+      {children}
     </div>
   );
 }

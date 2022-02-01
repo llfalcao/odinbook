@@ -2,28 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { LoadingIcon } from '../components/Icons';
-import { postApis } from '../api';
-
-async function createPost(post) {
-  const api = postApis.create;
-  const response = await fetch(api.url, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      ...api.headers,
-    },
-    method: api.method,
-    body: JSON.stringify(post),
-  });
-  return response;
-}
+import { createPost } from '../api/posts';
 
 export default function PostCreator({ user }) {
   const navigate = useNavigate();
   const [post, setPost] = useState({});
 
   function onChange(e) {
-    const { scrollHeight } = e.target;
-    e.target.style.height = `${scrollHeight}px`;
+    e.target.style.height = 'auto';
+    e.target.style.height = `${e.target.scrollHeight}px`;
     setPost((post) => ({ ...post, body: e.target.value }));
   }
 

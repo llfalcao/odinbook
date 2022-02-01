@@ -1,0 +1,23 @@
+.comment {
+  margin-top: 1rem;
+  display: flex;
+}
+
+.comment .comment__profilePicture {
+  margin-right: 0.5rem;
+}
+
+.comment__bodyContainer {
+  color: var(--main-text-color);
+}
+
+.comment__author {
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.comment__body {
+  font-size: 14px;
+}

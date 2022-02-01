@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
-function LandingPage({ status }) {
+export default function LandingPage({ status }) {
   if (status === 'loading') {
     return <></>;
   }
@@ -22,5 +22,3 @@ function LandingPage({ status }) {
     </div>
   );
 }
-
-export default LandingPage;
