@@ -5,8 +5,15 @@ import { LikeIcon, CommentIcon } from '../components/Icons';
 import { fetchLikes, toggleLike } from '../api/likes';
 import { submitComment } from '../api/comments';
 
-export default function Post(props) {
-  const { postId, author, date, body, linkToComments, children } = props;
+export default function Post({
+  postId,
+  author,
+  date,
+  body,
+  linkToComments,
+  reloadComments,
+  children,
+}) {
   const [postData, setPostData] = useState({});
   const [comment, setComment] = useState({ post: postId, text: '' });
   // Fetch post likes
@@ -49,6 +56,7 @@ export default function Post(props) {
 
   async function handleCommentSubmission() {
     await submitComment(comment);
+    if (children) reloadComments();
     setComment({ ...comment, text: '' });
     document.querySelector('textarea:focus').removeAttribute('style');
   }
