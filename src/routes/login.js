@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const router = Router();
 
 router.post('/', [
-  body('username', 'Username required').notEmpty(),
+  body('username', 'Username required').trim().notEmpty(),
   body('password', 'Password required').notEmpty(),
   async (req, res, next) => {
     const errors = validationResult(req);

@@ -4,6 +4,7 @@ import { verifyJWT } from './api/auth';
 import RequireAuth from './auth';
 import Home from './views/Home';
 import Login from './views/Login';
+import SignUp from './views/SignUp';
 import NotFound from './views/NotFound';
 import PostCreator from './views/PostCreator';
 import PostViewer from './views/PostViewer';
@@ -35,6 +36,12 @@ function App() {
             path="login"
             element={
               <Login authenticate={userAuth} status={status} token={token} />
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <SignUp authenticate={userAuth} status={status} token={token} />
             }
           />
 

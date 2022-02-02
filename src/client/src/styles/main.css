@@ -3,8 +3,9 @@
 @import url('./comment.css');
 
 .landing,
-.login {
-  height: 100vh;
+.login,
+.signup {
+  min-height: 100vh;
   background-image: url('../../public/images/landing_bg_mobile.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,7 +13,8 @@
 
 @media (min-width: 420px) {
   .landing,
-  .login {
+  .login,
+  .signup {
     background-image: url('../../public/images/landing_bg_desktop.jpg');
     background-position: bottom;
   }
@@ -61,7 +63,8 @@
   margin: 1rem 1.5rem;
 }
 
-.login .header__brand {
+.login .header__brand,
+.signup .header__brand {
   color: var(--text-reverse-color);
 }
 
@@ -75,13 +78,10 @@
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  align-items: ce;
 }
 
 .login__formInput {
   padding: 0.8rem 0.8rem;
-
-  border-radius: 2px;
   font-size: 14px;
   background: transparent;
   color: var(--form-input-text);
@@ -178,4 +178,83 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.signup__form {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 1.5rem;
+  background: var(--modal-bg-color);
+  box-shadow: 0 1px 4px #000;
+  border-radius: 4px;
+}
+
+.signup__form legend {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.signup__form input {
+  background-color: transparent;
+  color: var(--form-input-text);
+  border: var(--form-border-color);
+  margin: 0.2rem 0;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0.8rem 0.8rem;
+}
+
+.signup__birthdate {
+  border: 0;
+  margin: 0.2rem 0;
+  position: relative;
+}
+
+.signup__birthdate label {
+  position: absolute;
+  left: 0.8rem;
+  top: 4px;
+  font-size: 14px;
+  margin: 0.2rem 0;
+  width: 30%;
+  color: #969696;
+}
+
+.signup__birthdate input {
+  width: 100%;
+  padding: 1.6rem 0.8rem 0.8rem;
+}
+
+.signup__error {
+  margin: 0.5rem 0;
+  font-size: 12px;
+  color: rgb(231, 58, 66);
+}
+
+.signup hr {
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+
+.signup__btn {
+  padding: 0.7rem 0.8rem;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 4px;
+  transition: opacity 0.5s ease-out;
+  background-color: #1877f2;
+  margin-top: 0.5rem;
+}
+
+.signup__btn:hover {
+  opacity: 0.8;
+}
+
+.signup__btn:focus {
+  outline: 2px solid #29487d;
 }

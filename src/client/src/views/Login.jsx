@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleLogin } from '../api/auth';
 import Header from '../components/Header';
+import { LoadingIcon } from '../components/Icons';
 
 export default function Login({ authenticate, status, token }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Login({ authenticate, status, token }) {
   }
 
   if (status === 'loading') {
-    return <></>;
+    return <LoadingIcon />;
   }
 
   const handleErrors = (field, state) => {
@@ -105,7 +106,7 @@ export default function Login({ authenticate, status, token }) {
 
         <hr />
 
-        <Link to="/odinbook/signup" className="login__btn login__newAccountBtn">
+        <Link to="../signup" className="login__btn login__newAccountBtn">
           Create new account
         </Link>
       </form>
