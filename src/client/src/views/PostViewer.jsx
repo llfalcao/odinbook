@@ -7,25 +7,22 @@ import { fetchUserById } from '../api/users';
 import { fetchComments } from '../api/comments';
 import Comments from '../components/Comments';
 
-const url = window.location.href.split('/');
-const postId = url[url.length - 1];
-
 export default function PostViewer() {
+  const url = window.location.href.split('/');
+  const postId = url[url.length - 1];
   const [post, setPost] = useState(null);
 
-  useEffect(
-    () =>
-      (async () => {
-        const postData = await fetchPost(postId);
-        const author = await fetchUserById(postData.user_id);
-        const comments = await fetchComments(postId);
+  useEffect(() => {
+    (async () => {
+      const postData = await fetchPost(postId);
+      const author = await fetchUserById(postData.user_id);
+      const comments = await fetchComments(postId);
 
-        postData.author = author;
-        postData.comments = comments;
-        setPost({ ...postData });
-      })(),
-    [],
-  );
+      postData.author = author;
+      postData.comments = comments;
+      setPost({ ...postData });
+    })();
+  }, [postId]);
 
   async function reloadComments() {
     const comments = await fetchComments(postId);
