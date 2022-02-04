@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleLogin } from '../api/auth';
 import Header from '../components/Header';
@@ -8,6 +8,8 @@ export default function Login({ authenticate, status, token }) {
   const navigate = useNavigate();
   const [user, setUser] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
+
+  useEffect(() => document.getElementById('username').focus(), []);
 
   const currentToken = localStorage.getItem('token');
   if (currentToken && currentToken === token) {
@@ -70,6 +72,7 @@ export default function Login({ authenticate, status, token }) {
     <div className="login">
       <Header />
       <form className="login__form" onSubmit={onSubmit}>
+        <h1>Log in</h1>
         <input
           id="username"
           className="login__formInput"
