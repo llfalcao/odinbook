@@ -3,16 +3,14 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Post = require('../models/Post');
 require('../models/Post');
-const mongoose = require('mongoose');
 
-exports.fetchUsers = () =>
-  User.find({}, { password: 0 }).populate('friends').exec();
+exports.fetchUsers = () => User.find({}, { password: 0 }).exec();
 
 exports.fetchUser = (username) =>
-  User.findOne({ username }, { password: 0 }).populate('friends').exec();
+  User.findOne({ username }, { password: 0 }).exec();
 
 exports.fetchUserById = (userId) =>
-  User.findById(userId, { password: 0 }).populate('friends').exec();
+  User.findById(userId, { password: 0 }).exec();
 
 exports.createUser = async (userData) => {
   const hash = await bcrypt.hash(userData.password, 10);
@@ -44,6 +42,21 @@ exports.fetchUserFeed = async (username) => {
     .sort({ created_at: -1 })
     .exec();
   return feed;
+};
+
+exports.fetchUserFriends = async (username) => {
+  try {
+    const user = await User.findOne({ username }, { friends: 1 }).exec();
+    if (!user) throw new Error('User not found');
+
+    const friendlist = await User.find(
+      { _id: { $in: user.friends } },
+      { first_name: 1, last_name: 1, profile_pic: 1, username: 1 },
+    ).exec();
+    return friendlist;
+  } catch (error) {
+    throw error;
+  }
 };
 
 exports.validateUserInput = (fields) => {

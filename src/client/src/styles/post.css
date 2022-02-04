@@ -1,7 +1,3 @@
-.posts {
-  margin: 1rem auto 0;
-}
-
 .post__viewer {
   padding: 0 1rem;
 }
@@ -151,6 +147,7 @@
   color: var(--main-text-color);
   flex-grow: 1;
   font-size: 12px;
+  resize: none;
 }
 
 .comment__textarea:not(:placeholder-shown) {

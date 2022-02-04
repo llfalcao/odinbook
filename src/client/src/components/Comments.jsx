@@ -28,7 +28,7 @@ export default function Comments({ data }) {
       }
     }
     getAuthors();
-  }, [data]);
+  }, [data, comments]);
 
   return (
     <ul>

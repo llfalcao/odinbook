@@ -38,7 +38,12 @@ const UserSchema = new Schema({
     type: String,
     default: 'https://i.imgur.com/nM4yoyw.jpg',
   },
-  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 UserSchema.virtual('full_name').get(function () {
@@ -51,7 +56,7 @@ UserSchema.virtual('posts', {
   localField: '_id',
 });
 
-UserSchema.set('toObject', { virtuals: true });
+// UserSchema.set('toObject', { virtuals: true });
 UserSchema.set('toJSON', { virtuals: true });
 
 module.exports = model('User', UserSchema);

@@ -7,6 +7,7 @@ const {
   fetchUserFeed,
   validateUserInput,
   fetchUserById,
+  fetchUserFriends,
 } = require('../services/users');
 const { validationResult } = require('express-validator');
 const { verifyAccessToken } = require('../services/auth');
@@ -37,6 +38,13 @@ exports.userFeed = [
       .then((feed) => res.json(feed ? feed : 'Something went wrong'))
       .catch((error) => next(error)),
 ];
+
+exports.userFriends = (req, res, next) =>
+  fetchUserFriends(req.params.user)
+    .then((friends) =>
+      res.json(friends ? res.json(friends) : 'Something went wrong'),
+    )
+    .catch((error) => next(error));
 
 exports.userCreate = [
   validateUserInput(),
