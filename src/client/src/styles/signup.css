@@ -1,0 +1,103 @@
+.signup .header__brand {
+  color: var(--text-reverse-color);
+}
+
+.signup__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 1rem;
+  padding: 1.5rem;
+  background: var(--modal-bg-color);
+  box-shadow: 0 1px 4px #000;
+  border-radius: 4px;
+}
+
+@media (min-width: 450px) {
+  .signup__form {
+    margin: 1rem auto;
+  }
+}
+
+.signup__form legend {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 1rem;
+}
+
+.signup__form input {
+  background-color: transparent;
+  color: var(--form-input-text);
+  border: var(--form-border-color);
+  margin: 0.2rem 0;
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 0.8rem 0.8rem;
+  width: 100%;
+}
+
+.signup__fullName,
+.signup__location {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.signup__birthdate {
+  margin: 0.2rem 0;
+  position: relative;
+}
+
+.signup__birthdate label {
+  position: absolute;
+  left: 0.8rem;
+  top: 4px;
+  font-size: 14px;
+  margin: 0.2rem 0;
+  color: #969696;
+}
+
+.signup__birthdate input {
+  width: 100%;
+  padding: 1.6rem 0.8rem 0.8rem;
+}
+
+.signup__error {
+  margin: 0.5rem 0;
+  font-size: 12px;
+  color: rgb(231, 58, 66);
+}
+
+.signup hr {
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+
+.signup__submitBtn {
+  background-color: var(--green);
+  color: #f4f4f4;
+  border-radius: 4px;
+  margin-top: 0.4rem;
+  padding: 0.6rem 0;
+  font-size: 18px;
+  transition: background-color 0.15s ease-out;
+}
+
+.signup__submitBtn:hover {
+  background-color: var(--green-on-hover);
+}
+
+.signup__submitBtn:focus {
+  outline: 2px solid var(--green-on-focus);
+}
+
+.signup__form a {
+  color: var(--blue);
+  font-size: 14px;
+  margin-top: 0.8rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .signup__form a {
+    color: #9ac5ff;
+  }
+}

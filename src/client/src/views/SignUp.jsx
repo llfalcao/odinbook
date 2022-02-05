@@ -1,11 +1,15 @@
 import { Link, Navigate } from 'react-router-dom';
-import Header from '../components/Header';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SignUp({ authenticate, status, token }) {
   const [startDate, setStartDate] = useState(new Date());
+
+  useEffect(() => {
+    const input = document.querySelector('input');
+    if (input) input.focus();
+  }, []);
 
   const currentToken = localStorage.getItem('token');
   if (currentToken && currentToken === token) {
@@ -14,12 +18,14 @@ export default function SignUp({ authenticate, status, token }) {
 
   return (
     <div className="signup">
-      <Header />
+      <h1 className="logo--large">odinbook</h1>
       <form className="signup__form">
         <legend>Sign up</legend>
 
-        <input name="first_name" type="text" placeholder="First name" />
-        <input name="last_name" type="text" placeholder="Last name" />
+        <fieldset className="signup__fullName">
+          <input name="first_name" type="text" placeholder="First name" />
+          <input name="last_name" type="text" placeholder="Last name" />
+        </fieldset>
         <input name="username" type="text" placeholder="Username" />
         <input name="password" type="password" placeholder="Password" />
         <input name="password" type="password" placeholder="Confirm password" />
@@ -32,12 +38,18 @@ export default function SignUp({ authenticate, status, token }) {
           />
         </fieldset>
 
-        <input name="city" type="text" placeholder="City (optional)" />
-        <input name="country" type="text" placeholder="Country" />
+        <fieldset className="signup__location">
+          <input name="city" type="text" placeholder="City (optional)" />
+          <input name="country" type="text" placeholder="Country" />
+        </fieldset>
 
-        <button type="submit">Sign up</button>
+        <button type="submit" className="signup__submitBtn">
+          Sign up
+        </button>
 
-        <Link to="../login">Already have an account? Log in here.</Link>
+        <Link to="../login">
+          Already have an account? <b>Log in.</b>
+        </Link>
       </form>
     </div>
   );

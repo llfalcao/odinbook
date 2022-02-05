@@ -10,14 +10,14 @@ export default function LandingPage({ status }) {
     <div className="landing">
       <Header />
       <main className="landing__main">
-        <h1 className="landing__headline">
-          Connect with friends and the world around you on Odinbook.
-        </h1>
-        <Link to="/odinbook/login">
-          <button type="button" className="landing__cta">
-            Sign in
-          </button>
-        </Link>
+        <div className="landing__headline">
+          <h1>Connect with friends and the world around you on Odinbook.</h1>
+          <Link to="/odinbook/login">
+            <button type="button" className="landing__cta">
+              Sign in
+            </button>
+          </Link>
+        </div>
       </main>
     </div>
   );

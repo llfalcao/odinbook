@@ -6,6 +6,10 @@
 
 :root {
   --blue: #2374e1;
+  --green: #00a400;
+  --green-on-focus: #2b9217;
+  --green-on-hover: #068a06;
+  --font-logo: 'Titillium Web', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -59,6 +63,10 @@ input,
 textarea {
   border: 0;
   font-family: inherit;
+}
+
+fieldset {
+  border: 0;
 }
 
 button {

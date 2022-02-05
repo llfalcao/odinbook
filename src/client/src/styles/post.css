@@ -5,6 +5,7 @@
 .post {
   background-color: var(--secondary-bg-color);
   padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
   margin: 1rem 0;
@@ -12,10 +13,13 @@
 
 .post__header {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
 .post__profilePicture {
   background: #555;
+  box-shadow: 0 0 2px #101112;
   border-radius: 100%;
   width: 40px;
   height: 40px;
@@ -25,12 +29,12 @@
 .post__profilePicture img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .post__info {
   display: flex;
   flex-direction: column;
-  margin-left: 0.6rem;
 }
 
 .post__author {

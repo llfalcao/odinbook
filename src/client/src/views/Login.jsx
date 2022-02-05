@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { handleLogin } from '../api/auth';
-import Header from '../components/Header';
 import { LoadingIcon } from '../components/Icons';
 
 export default function Login({ authenticate, status, token }) {
@@ -9,7 +8,10 @@ export default function Login({ authenticate, status, token }) {
   const [user, setUser] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
 
-  useEffect(() => document.getElementById('username').focus(), []);
+  useEffect(() => {
+    const input = document.querySelector('input');
+    if (input) input.focus();
+  }, []);
 
   const currentToken = localStorage.getItem('token');
   if (currentToken && currentToken === token) {
@@ -70,9 +72,9 @@ export default function Login({ authenticate, status, token }) {
 
   return (
     <div className="login">
-      <Header />
+      <h1 className="logo--large">odinbook</h1>
       <form className="login__form" onSubmit={onSubmit}>
-        <h1>Log in</h1>
+        <legend>Log in</legend>
         <input
           id="username"
           className="login__formInput"
