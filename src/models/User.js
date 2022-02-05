@@ -56,7 +56,7 @@ UserSchema.virtual('posts', {
   localField: '_id',
 });
 
-// UserSchema.set('toObject', { virtuals: true });
+UserSchema.set('toObject', { virtuals: true });
 UserSchema.set('toJSON', { virtuals: true });
 
 module.exports = model('User', UserSchema);

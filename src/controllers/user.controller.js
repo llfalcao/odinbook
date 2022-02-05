@@ -41,9 +41,7 @@ exports.userFeed = [
 
 exports.userFriends = (req, res, next) =>
   fetchUserFriends(req.params.user)
-    .then((friends) =>
-      res.json(friends ? res.json(friends) : 'Something went wrong'),
-    )
+    .then((friends) => res.json(friends ? friends : 'Something went wrong'))
     .catch((error) => next(error));
 
 exports.userCreate = [
