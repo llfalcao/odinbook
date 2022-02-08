@@ -15,3 +15,17 @@ export async function fetchFriends(username) {
   });
   return await response.json();
 }
+
+export async function createUser(data) {
+  const location = { city: data.city, country: data.country };
+  const user = { location, ...data };
+  delete user.city;
+  delete user.country;
+
+  const api = userApis.create;
+  return await fetch(`${api.url}/create`, {
+    method: api.method,
+    headers: api.headers,
+    body: JSON.stringify(user),
+  });
+}

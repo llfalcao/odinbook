@@ -79,7 +79,7 @@ exports.validateUserInput = (fields) => {
       .isLength({ min: 8 })
       .withMessage('Password is too short'),
 
-    confirmPassword: body('confirm_password').custom(
+    confirmPassword: body('password_confirmation').custom(
       (passwordConfirmation, { req }) => {
         if (passwordConfirmation !== req.body.password) {
           throw new Error('Passwords do not match');
