@@ -21,7 +21,6 @@ export default function SignUp({ authenticate, status, token }) {
   useEffect(() => {
     // Minimum age of 13 years old to sign up, just like Facebook...
     const date = new Date();
-    date.setFullYear(date.getFullYear() - 13);
     setStartDate(date);
     setForm((form) => ({ ...form, date_of_birth: date.toUTCString() }));
     // UX
@@ -34,12 +33,71 @@ export default function SignUp({ authenticate, status, token }) {
     return <Navigate to="/odinbook" />;
   }
 
-  function onChange(e) {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  }
+  const handleErrors = (name, value) => {
+    switch (name) {
+      case 'first_name':
+        if (value === '') return 'First name required.';
+        if (value.length > 50)
+          return 'First name must not exceed 50 characters.';
+        return;
+      case 'last_name':
+        if (value === '') return 'Last name required.';
+        if (value.length > 50)
+          return 'Last name must not exceed 50 characters.';
+        return;
+      case 'username':
+        if (value === '') return 'Username required';
+        if (value.length > 20) return 'Username is too long.';
+        if (!value.match(/^[A-Za-z0-9]+$/))
+          return 'Username can only contain letters and/or numbers.';
+        return;
+      case 'password':
+        if (value === '') return 'Password required.';
+        if (value.length > 128) return 'Password is too long.';
+        if (form.password_confirmation.length > 0) {
+          if (value !== form.password_confirmation) {
+            return 'Passwords do not match.';
+          } else if (value === form.password_confirmation) {
+            return 'Passwords match.';
+          }
+        }
+        return;
+      case 'password_confirmation':
+        if (value !== form.password) return 'Passwords do not match.';
+        return;
+      case 'country':
+        if (value === '') return 'Country required.';
+        return;
+      default:
+        return;
+    }
+  };
 
-  async function onSubmit(e) {
+  const onChange = (e, date) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: date || value });
+    setErrors((errors) => {
+      const errorMsg = handleErrors(name, date || value);
+      if (name === 'password') {
+        if (errorMsg === 'Passwords do not match.') {
+          delete errors[name];
+          return { ...errors, password_confirmation: errorMsg };
+        } else if (errorMsg === 'Passwords match.') {
+          delete errors[name];
+          delete errors.password_confirmation;
+          return errors;
+        }
+      }
+      if (!errorMsg) {
+        delete errors[name];
+        return errors;
+      } else {
+        return { ...errors, [name]: errorMsg };
+      }
+    });
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     let res = await createUser(form);
     res = await res.json();
@@ -47,6 +105,8 @@ export default function SignUp({ authenticate, status, token }) {
     if (res.errors) {
       const { errors: err } = res;
       setErrors(
+        // Generate an object with keys being each input "name"
+        // and the error message as the value.
         err.reduce((obj, e) => {
           obj[e.param] = e.msg;
           return obj;
@@ -55,7 +115,7 @@ export default function SignUp({ authenticate, status, token }) {
 
       return;
     }
-  }
+  };
 
   return (
     <div className="signup">
@@ -63,22 +123,30 @@ export default function SignUp({ authenticate, status, token }) {
       <form className="signup__form" onSubmit={onSubmit}>
         <legend>Sign up</legend>
         <fieldset className="signup__fullName">
-          <input
-            name="first_name"
-            type="text"
-            placeholder="First name"
-            value={form.first_name}
-            onChange={onChange}
-          />
-          {errors.first_name && <p>{errors.first_name}</p>}
-          <input
-            name="last_name"
-            type="text"
-            placeholder="Last name"
-            value={form.last_name}
-            onChange={onChange}
-          />
-          {errors.last_name && <p>{errors.last_name}</p>}
+          <div>
+            <input
+              name="first_name"
+              type="text"
+              placeholder="First name"
+              value={form.first_name}
+              onChange={onChange}
+            />
+            <input
+              name="last_name"
+              type="text"
+              placeholder="Last name"
+              value={form.last_name}
+              onChange={onChange}
+            />
+          </div>
+          <div>
+            {errors.first_name && (
+              <p className="signup__error">{errors.first_name}</p>
+            )}
+            {errors.last_name && (
+              <p className="signup__error">{errors.last_name}</p>
+            )}
+          </div>
         </fieldset>
         <input
           name="username"
@@ -86,8 +154,9 @@ export default function SignUp({ authenticate, status, token }) {
           placeholder="Username"
           value={form.username}
           onChange={onChange}
+          maxLength={20}
         />
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="signup__error">{errors.username}</p>}
         <input
           name="password"
           type="password"
@@ -95,7 +164,7 @@ export default function SignUp({ authenticate, status, token }) {
           value={form.password}
           onChange={onChange}
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="signup__error">{errors.password}</p>}
         <input
           name="password_confirmation"
           type="password"
@@ -103,37 +172,47 @@ export default function SignUp({ authenticate, status, token }) {
           value={form.password_confirmation}
           onChange={onChange}
         />
-        {errors.password_confirmation && <p>{errors.password_confirmation}</p>}
+        {errors.password_confirmation && (
+          <p className="signup__error">{errors.password_confirmation}</p>
+        )}
         <fieldset className="signup__birthdate">
           <label htmlFor="birthdate">Date of birth</label>
           <DatePicker
             id="birthdate"
             name="date_of_birth"
             selected={startDate}
-            onChange={(date) => {
+            onChange={(date, e) => {
               setStartDate(date);
-              setForm({ ...form, date_of_birth: date });
+              onChange(e, date);
             }}
           />
         </fieldset>
-        {errors.date_of_birth && <p>{errors.date_of_birth}</p>}
+        {errors.date_of_birth && (
+          <p className="signup__error">{errors.date_of_birth}</p>
+        )}
         <fieldset className="signup__location">
-          <input
-            name="city"
-            type="text"
-            placeholder="City (optional)"
-            value={form.city}
-            onChange={onChange}
-          />
-          {errors.city && <p>{errors.city}</p>}
-          <input
-            name="country"
-            type="text"
-            placeholder="Country"
-            value={form.country}
-            onChange={onChange}
-          />
-          {errors.country && <p>{errors.country}</p>}
+          <div>
+            <input
+              name="city"
+              type="text"
+              placeholder="City (optional)"
+              value={form.city}
+              onChange={onChange}
+            />
+            {errors.city && <p className="signup__error">{errors.city}</p>}
+            <input
+              name="country"
+              type="text"
+              placeholder="Country"
+              value={form.country}
+              onChange={onChange}
+            />
+          </div>
+          {errors.country && (
+            <p className="signup__error" style={{ textAlign: 'right' }}>
+              {errors.country}
+            </p>
+          )}
         </fieldset>
 
         <button type="submit" className="signup__submitBtn" onSubmit={onSubmit}>

@@ -1,3 +1,7 @@
+.signup {
+  padding-bottom: 5rem;
+}
+
 .signup .header__brand {
   color: var(--text-reverse-color);
 }
@@ -36,8 +40,18 @@
   width: 100%;
 }
 
+.signup__location div {
+  display: flex;
+  gap: 0.4rem;
+}
+
 .signup__fullName,
 .signup__location {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup__fullName div:first-child {
   display: flex;
   gap: 0.4rem;
 }
@@ -88,6 +102,15 @@
 
 .signup__submitBtn:focus {
   outline: 2px solid var(--green-on-focus);
+}
+
+.signup__error {
+  color: rgb(231, 58, 66);
+  font-size: 14px;
+  list-style: disc outside none;
+  display: list-item;
+  margin-left: 1rem;
+  margin-top: 0;
 }
 
 .signup__form a {

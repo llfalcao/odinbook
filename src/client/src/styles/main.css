@@ -10,6 +10,7 @@
   background-image: url('../../public/images/landing_bg_mobile.png');
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 @media (min-width: 420px) {

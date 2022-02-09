@@ -1,5 +1,6 @@
 const { body } = require('express-validator');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 const User = require('../models/User');
 const Post = require('../models/Post');
 require('../models/Post');
@@ -63,7 +64,7 @@ exports.validateUserInput = (fields) => {
   const validations = {
     username: body('username', 'Username required')
       .trim()
-      .isLength({ min: 3 })
+      .isLength({ min: 3, max: 20 })
       .withMessage('Username is too short')
       .custom(async (username) => {
         if (!username.match(/^[A-Za-z0-9]+$/)) {
@@ -76,7 +77,7 @@ exports.validateUserInput = (fields) => {
       }),
 
     password: body('password', 'Password required')
-      .isLength({ min: 8 })
+      .isLength({ min: 8, max: 128 })
       .withMessage('Password is too short'),
 
     confirmPassword: body('password_confirmation').custom(
@@ -88,13 +89,25 @@ exports.validateUserInput = (fields) => {
       },
     ),
 
-    firstName: body('first_name', 'First name required').trim().notEmpty(),
+    firstName: body('first_name', 'First name required')
+      .trim()
+      .notEmpty()
+      .isLength({ max: 50 }),
 
-    lastName: body('last_name', 'Last name required').trim().notEmpty(),
+    lastName: body('last_name', 'Last name required')
+      .trim()
+      .notEmpty()
+      .isLength({ max: 50 }),
 
     dateOfBirth: body('date_of_birth', 'Date of birth required')
       .trim()
-      .notEmpty(),
+      .notEmpty()
+      .custom((value) => {
+        const age = moment().diff(moment(value), 'years');
+        if (age < 13) {
+          throw new Error('You must be at least 13 years old to sign up.');
+        }
+      }),
 
     country: body('location.country', 'Country required').trim().notEmpty(),
   };
