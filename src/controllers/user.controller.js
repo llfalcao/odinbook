@@ -12,6 +12,8 @@ const {
 const { validationResult } = require('express-validator');
 const { verifyAccessToken } = require('../services/auth');
 const { verifyUser } = require('../services/auth');
+const FriendRequest = require('../models/FriendRequest');
+const User = require('../models/User');
 
 exports.userList = (req, res, next) => {
   if (typeof req.query.id !== 'undefined') {
@@ -108,6 +110,41 @@ exports.userDelete = [
       } else {
         next(error);
       }
+    }
+  },
+];
+
+// Get friend requests sent by and to an user
+exports.userFriendRequests = [
+  verifyAccessToken,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const { user } = req;
+      const friendRequests = await FriendRequest.find({
+        $or: [{ from: user.id }, { to: user.id }],
+      })
+        .lean()
+        .exec();
+
+      for await (const request of friendRequests) {
+        let userInfo;
+        if (request.from.toString() === user.id) {
+          userInfo = await User.findOne(
+            { _id: request.to },
+            { first_name: 1, last_name: 1, profile_pic: 1, _id: 0 },
+          ).exec();
+        } else {
+          userInfo = await User.findOne(
+            { _id: request.from },
+            { first_name: 1, last_name: 1, profile_pic: 1, _id: 0 },
+          ).exec();
+        }
+        request.user_info = userInfo;
+      }
+      res.json(friendRequests);
+    } catch (error) {
+      next(error);
     }
   },
 ];
