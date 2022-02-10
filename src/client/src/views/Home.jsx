@@ -16,7 +16,7 @@ function Home({ user, status, token }) {
 
   return (
     <div className="home">
-      <Header />
+      <Header user={user} />
       <div className="columns">
         <main>
           <div className="new-post__form">
