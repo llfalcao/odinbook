@@ -292,6 +292,10 @@
   }
 }
 
+.friendlist li {
+  margin-bottom: 0.8rem;
+}
+
 .logo--large {
   text-align: center;
   color: #222222;
