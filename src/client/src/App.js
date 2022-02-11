@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { verifyJWT } from './api/auth';
+import { getCurrentUser } from './api/auth';
 import RequireAuth from './auth';
 import Home from './views/Home';
 import Login from './views/Login';
@@ -15,7 +15,7 @@ function App() {
   const [token, setToken] = useState(null);
 
   const userAuth = async () => {
-    const userData = await verifyJWT();
+    const userData = await getCurrentUser();
     if (userData) {
       setUser(userData);
       setToken(localStorage.getItem('token'));

@@ -10,7 +10,7 @@ export async function handleLogin(user) {
   return await response.json();
 }
 
-export async function verifyJWT() {
+export async function getCurrentUser() {
   const token = localStorage.getItem('token');
   if (!token) return;
 

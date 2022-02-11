@@ -148,3 +148,26 @@ exports.userFriendRequests = [
     }
   },
 ];
+
+exports.newFriend = [
+  verifyAccessToken,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const currentUser = req.params.user;
+      const { friendId, requestId } = req.body;
+      await User.findOneAndUpdate(
+        { _id: currentUser },
+        { $push: { friends: friendId } },
+      ).exec();
+      await User.findOneAndUpdate(
+        { _id: friendId },
+        { $push: { friends: currentUser } },
+      ).exec();
+      await FriendRequest.findOneAndDelete({ _id: requestId }).exec();
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  },
+];
