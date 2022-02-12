@@ -4,12 +4,12 @@ import LandingPage from './LandingPage';
 import Header from '../components/Header';
 import Post from '../components/Post';
 import { LoadingIcon } from '../components/Icons';
-import { fetchPosts } from '../api/posts';
+import { fetchPostFeed } from '../api/posts';
 import Friendlist from '../components/Friendlist';
 
 function Home({ user, status, token }) {
   const [posts, setPosts] = useState();
-  useEffect(() => fetchPosts(user).then((data) => setPosts(data)), [user]);
+  useEffect(() => fetchPostFeed(user).then((data) => setPosts(data)), [user]);
 
   const currentToken = localStorage.getItem('token');
   if (!user || currentToken !== token) return <LandingPage status={status} />;

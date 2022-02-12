@@ -2,6 +2,7 @@
 @import url('./post.css');
 @import url('./comment.css');
 @import url('./signup.css');
+@import url('./profile.css');
 
 .landing,
 .login,
@@ -249,17 +250,22 @@
   flex-basis: 30vw;
 }
 
-.profilePicture--small {
+.profilePicture {
   background: #555;
   border-radius: 100%;
-  width: 28px;
-  height: 28px;
+  width: 140px;
+  height: 140px;
   overflow: hidden;
 }
 
-.profilePicture--small img {
+.profilePicture img {
   width: 100%;
   height: 100%;
+}
+
+.profilekPicture--small {
+  width: 28px;
+  height: 28px;
 }
 
 .friendlist {

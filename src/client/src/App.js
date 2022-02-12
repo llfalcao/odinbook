@@ -8,6 +8,7 @@ import SignUp from './views/SignUp';
 import NotFound from './views/NotFound';
 import PostCreator from './views/PostCreator';
 import PostViewer from './views/PostViewer';
+import Profile from './views/Profile';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -52,6 +53,7 @@ function App() {
           <Route element={<RequireAuth status={status} token={token} />}>
             <Route path="new-post" element={<PostCreator user={user} />} />
             <Route path="p/:post" element={<PostViewer user={user} />} />
+            <Route path="u/:user" element={<Profile user={user} />} />
           </Route>
         </Route>
 

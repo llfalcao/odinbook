@@ -77,11 +77,16 @@ export default function Post({
   return (
     <div className="post">
       <header className="post__header">
-        <div className="post__profilePicture">
+        <Link
+          to={`/odinbook/u/${author.username}`}
+          className="post__profilePicture"
+        >
           <img src={author.profile_pic} alt="" />
-        </div>
+        </Link>
         <div className="post__info">
-          <span className="post__author">{author.full_name}</span>
+          <Link to={`/odinbook/u/${author.username}`} className="post__author">
+            {author.full_name}
+          </Link>
           <span className="post__date">{moment(date).fromNow()}</span>
         </div>
       </header>

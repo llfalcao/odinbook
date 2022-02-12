@@ -15,12 +15,13 @@ function Header({ user }) {
         odinbook
       </Link>
       {user && (
-        <>
+        <nav>
+          <Link to={`/odinbook/u/${user.username}`}>{user.full_name}</Link>
           <FriendRequests />
           <button type="button" onClick={logout}>
             Sign out
           </button>
-        </>
+        </nav>
       )}
     </header>
   );
