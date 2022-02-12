@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchUserPosts } from '../api/posts';
+import { fetchUser } from '../api/users';
 import Header from '../components/Header';
 import { AboutIcon, LoadingIcon } from '../components/Icons';
+import NewPostCTA from '../components/NewPostCTA';
 import Post from '../components/Post';
 
-export default function Profile({ user }) {
+export default function Profile({ user: currentUser }) {
+  const [user, setUser] = useState();
   const [posts, setPosts] = useState();
-  useEffect(
-    () => fetchUserPosts(user.username).then((data) => setPosts(data)),
-    [user],
-  );
+  const url = window.location.href.split('/');
+  const username = url[url.length - 1];
+  useEffect(() => {
+    fetchUser(username).then((data) => setUser(data));
+    fetchUserPosts(username).then((data) => setPosts(data));
+  }, [username]);
+
+  if (!user) return <LoadingIcon />;
 
   return (
     <main>
@@ -32,24 +39,30 @@ export default function Profile({ user }) {
             <span>Friends</span>
           </Link>
           <Link to={`/odinbook/u/${user.username}`}>
-            <span>105</span>
+            <span>{user.total_posts}</span>
             <span>Posts</span>
           </Link>
         </div>
       </div>
+
+      {currentUser.username === username && <NewPostCTA user={user} />}
       <section className="posts">
         {posts ? (
-          posts.map((post) => (
-            <Post
-              key={post._id}
-              postId={post._id}
-              author={user}
-              date={post.created_at}
-              body={post.body}
-              userId={user._id}
-              linkToComments={true}
-            />
-          ))
+          posts.length > 0 ? (
+            posts.map((post) => (
+              <Post
+                key={post._id}
+                postId={post._id}
+                author={user}
+                date={post.created_at}
+                body={post.body}
+                userId={user._id}
+                linkToComments={true}
+              />
+            ))
+          ) : (
+            <p>No posts yet.</p>
+          )
         ) : (
           <LoadingIcon />
         )}

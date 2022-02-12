@@ -23,11 +23,21 @@ exports.createPost = async (user, postData) => {
     ...postData,
   });
   await post.save();
+  await User.findOneAndUpdate(
+    { _id: user.id },
+    { $inc: { total_posts: 1 } },
+  ).exec();
 };
 
 exports.updatePost = (id, post) => Post.updateOne({ _id: id }, post).exec();
 
-exports.deletePost = (id) => Post.deleteOne({ _id: id }).exec();
+exports.deletePost = async (id) => {
+  const post = await Post.findOneAndDelete({ _id: id }).exec();
+  await User.findOneAndUpdate(
+    { user_id: post.user_id },
+    { $inc: { total_posts: -1 } },
+  ).exec();
+};
 
 exports.validatePost = [
   body('body', 'Post required')

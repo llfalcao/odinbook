@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const Post = require('./Post');
 
 const UserSchema = new Schema({
   username: {
@@ -31,7 +32,7 @@ const UserSchema = new Schema({
     state: String,
     country: {
       type: String,
-      // required: true,
+      required: true,
     },
   },
   profile_pic: {
@@ -44,6 +45,7 @@ const UserSchema = new Schema({
       ref: 'User',
     },
   ],
+  total_posts: { type: Number, default: 0 },
 });
 
 UserSchema.virtual('full_name').get(function () {

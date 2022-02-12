@@ -1,18 +1,20 @@
 import { userApis } from './api';
 
+export async function fetchUser(username) {
+  const api = userApis.read;
+  const response = await fetch(`${api.url}/${username}`);
+  return await response.json();
+}
+
 export async function fetchUserById(userId) {
   const api = userApis.read;
-  const response = await fetch(`${api.url}?id=${userId}`, {
-    method: api.method,
-  });
+  const response = await fetch(`${api.url}?id=${userId}`);
   return await response.json();
 }
 
 export async function fetchFriends(username) {
   const api = userApis.read;
-  const response = await fetch(`${api.url}/${username}/friends`, {
-    method: api.method,
-  });
+  const response = await fetch(`${api.url}/${username}/friends`);
   return await response.json();
 }
 
@@ -32,12 +34,9 @@ export async function createUser(data) {
 
 export async function fetchFriendRequests(userId) {
   const api = userApis.read;
+  const token = localStorage.getItem('token');
   const response = await fetch(`${api.url}/${userId}/friend-requests`, {
-    method: api.method,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      ...api.headers,
-    },
+    headers: { Authorization: `Bearer ${token}`, ...api.headers },
   });
   const friendRequests = await response.json();
   const sent = [];
@@ -54,14 +53,12 @@ export async function fetchFriendRequests(userId) {
 
 export async function addFriend(userId, friendId, requestId) {
   const api = userApis.create;
+  const token = localStorage.getItem('token');
   return await fetch(
     `${api.url}/${userId}/friend-requests/confirm?from=${friendId}`,
     {
       method: api.method,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        ...api.headers,
-      },
+      headers: { Authorization: `Bearer ${token}`, ...api.headers },
       body: JSON.stringify({ friendId, requestId }),
     },
   );

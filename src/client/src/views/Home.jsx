@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import LandingPage from './LandingPage';
 import Header from '../components/Header';
 import Post from '../components/Post';
 import { LoadingIcon } from '../components/Icons';
 import { fetchPostFeed } from '../api/posts';
 import Friendlist from '../components/Friendlist';
+import NewPostCTA from '../components/NewPostCTA';
 
 function Home({ user, status, token }) {
   const [posts, setPosts] = useState();
@@ -19,15 +19,7 @@ function Home({ user, status, token }) {
       <Header user={user} />
       <div className="columns">
         <main>
-          <div className="new-post__form">
-            <div className="new-post__profilePicture">
-              <img src={user.profile_pic} alt="" />
-            </div>
-            <Link to="/odinbook/new-post" className="new-post__link">
-              {`What's on your mind, ${user.first_name}?`}
-            </Link>
-          </div>
-
+          <NewPostCTA user={user} />
           <section className="posts">
             {posts ? (
               posts.map((post) => {
