@@ -14,7 +14,7 @@ export default function Friendlist({ username }) {
       <ul>
         {friends.map((user) => (
           <li key={user._id}>
-            <div className="profilePicture--small">
+            <div className="profilePicture profilePicture--small">
               <img src={user.profile_pic} alt="" />
             </div>
             <p>{user.full_name}</p>

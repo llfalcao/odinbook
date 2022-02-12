@@ -37,22 +37,19 @@ export default function Profile({ user }) {
           </Link>
         </div>
       </div>
-
       <section className="posts">
         {posts ? (
-          posts.map((post) => {
-            return (
-              <Post
-                key={post._id}
-                postId={post._id}
-                author={post.user_id}
-                date={post.created_at}
-                body={post.body}
-                userId={user._id}
-                linkToComments={true}
-              />
-            );
-          })
+          posts.map((post) => (
+            <Post
+              key={post._id}
+              postId={post._id}
+              author={user}
+              date={post.created_at}
+              body={post.body}
+              userId={user._id}
+              linkToComments={true}
+            />
+          ))
         ) : (
           <LoadingIcon />
         )}
