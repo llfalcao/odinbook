@@ -1,0 +1,33 @@
+.friendlist {
+  display: flex;
+  flex-direction: column;
+}
+
+.friendlist--sidebar {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  padding: 1rem;
+  width: 100%;
+  max-width: 250px;
+}
+
+.friendlist--sidebar h4 {
+  margin-bottom: 1rem;
+}
+
+.friendlist--sidebar li {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 1200px) {
+  .friendlist--sidebar {
+    display: none;
+  }
+}
+
+.friendlist li {
+  margin-bottom: 0.8rem;
+}

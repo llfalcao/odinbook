@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getCurrentUser } from '../api/auth';
 import { addFriend, fetchFriendRequests } from '../api/users';
 
-export default function FriendRequests() {
+export default function FriendRequests({ hidden }) {
   const [friendRequests, setFriendRequests] = useState({
     sent: [],
     received: [],
@@ -11,6 +12,7 @@ export default function FriendRequests() {
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
+      console.log(currentUser);
       const { sent, received } = await fetchFriendRequests(currentUser._id);
       setFriendRequests((friendRequests) => ({
         ...friendRequests,
@@ -33,42 +35,63 @@ export default function FriendRequests() {
     }));
   };
 
+  if (hidden) return <></>;
+
   return (
-    <div>
+    <div className="friendRequests">
       <p>Sent</p>
       <ul>
-        {friendRequests.sent.map((req) => (
-          <li key={req._id}>
-            <div>
-              <div className="profilePicture--small">
-                <img src={req.user_info.profile_pic} alt="" />
+        {friendRequests.sent.length > 0 ? (
+          friendRequests.sent.map((req) => (
+            <li key={req._id}>
+              <div className="friendRequest__info">
+                <div className="profilePicture profilePicture--small">
+                  <img src={req.user_info.profile_pic} alt="" />
+                </div>
+                <span>{req.user_info.full_name}</span>
               </div>
-              <p>{req.user_info.full_name}</p>
-            </div>
-            <div>
-              <button type="button">Delete</button>
-            </div>
-          </li>
-        ))}
+
+              <button type="button" className="friendRequest__btn btn-delete">
+                Delete
+              </button>
+            </li>
+          ))
+        ) : (
+          <span>No friend requests sent.</span>
+        )}
       </ul>
 
       <p>Received</p>
-      {friendRequests.received.map((req) => (
-        <li key={req._id}>
-          <div>
-            <div className="profilePicture--small">
-              <img src={req.user_info.profile_pic} alt="" />
+      {friendRequests.received.length > 0 ? (
+        friendRequests.received.map((req) => (
+          <li key={req._id}>
+            <Link
+              to={`/odinbook/u/${req.user_info.username}`}
+              className="friendRequest__info"
+            >
+              <div className="profilePicture profilePicture--small">
+                <img src={req.user_info.profile_pic} alt="" />
+              </div>
+              <span>{req.user_info.full_name}</span>
+            </Link>
+
+            <div className="friendRequest__btnContainer">
+              <button
+                type="button"
+                className="friendRequest__btn btn-confirm"
+                onClick={() => acceptRequest(req)}
+              >
+                Confirm
+              </button>
+              <button type="button" className="friendRequest__btn btn-delete">
+                Delete
+              </button>
             </div>
-            <p>{req.user_info.full_name}</p>
-          </div>
-          <div>
-            <button type="button" onClick={() => acceptRequest(req)}>
-              Confirm
-            </button>
-            <button type="button">Delete</button>
-          </div>
-        </li>
-      ))}
+          </li>
+        ))
+      ) : (
+        <span>No friend requests received.</span>
+      )}
     </div>
   );
 }

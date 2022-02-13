@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.profileCard h1 {
+  margin-top: 0.6rem;
+}
+
 .profileCard div:first-child {
   display: flex;
   flex-direction: column;
@@ -44,4 +48,17 @@
 .profileCard__links svg {
   stroke: var(--blue);
   stroke-width: 2px;
+}
+
+.profileCard__requestBtn {
+  background: var(--blue);
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  color: var(--main-text-color);
+  font-size: 14px;
+  transition: background 0.15s ease-out;
+}
+
+.profileCard__requestBtn:hover {
+  background: var(--blue-on-hover);
 }

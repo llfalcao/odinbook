@@ -6,6 +6,7 @@
 
 :root {
   --blue: #2374e1;
+  --blue-on-hover: #1664ca;
   --green: #00a400;
   --green-on-focus: #2b9217;
   --green-on-hover: #068a06;
@@ -32,7 +33,7 @@
     color: #111;
     --main-bg-color: #f8f8f8;
     --secondary-bg-color: #ffffff;
-    --main-text-color: #111;
+    --main-text-color: rgb(31, 31, 31);
     --text-reverse-color: #eee;
     --modal-bg-color: #f8f8f8;
     --form-input-text: #111;

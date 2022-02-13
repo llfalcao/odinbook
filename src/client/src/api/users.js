@@ -51,6 +51,18 @@ export async function fetchFriendRequests(userId) {
   return { sent, received };
 }
 
+export async function sendFriendRequest(currentUserId, friendId) {
+  const api = userApis.create;
+  const token = localStorage.getItem('token');
+  return await fetch(
+    `${api.url}/${currentUserId}/friend-requests/?to=${friendId}`,
+    {
+      method: api.method,
+      headers: { Authorization: `Bearer ${token}`, ...api.headers },
+    },
+  );
+}
+
 export async function addFriend(userId, friendId, requestId) {
   const api = userApis.create;
   const token = localStorage.getItem('token');

@@ -129,16 +129,17 @@ exports.userFriendRequests = [
 
       for await (const request of friendRequests) {
         let userInfo;
+        const filter = {
+          first_name: 1,
+          last_name: 1,
+          profile_pic: 1,
+          username: 1,
+          _id: 0,
+        };
         if (request.from.toString() === user.id) {
-          userInfo = await User.findOne(
-            { _id: request.to },
-            { first_name: 1, last_name: 1, profile_pic: 1, _id: 0 },
-          ).exec();
+          userInfo = await User.findOne({ _id: request.to }, filter).exec();
         } else {
-          userInfo = await User.findOne(
-            { _id: request.from },
-            { first_name: 1, last_name: 1, profile_pic: 1, _id: 0 },
-          ).exec();
+          userInfo = await User.findOne({ _id: request.from }, filter).exec();
         }
         request.user_info = userInfo;
       }
@@ -149,7 +150,27 @@ exports.userFriendRequests = [
   },
 ];
 
-exports.newFriend = [
+exports.newFriendRequest = [
+  verifyAccessToken,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const currentUser = req.params.user;
+      const newFriend = req.query.to;
+      const friendRequest = new FriendRequest({
+        from: currentUser,
+        to: newFriend,
+        created_at: new Date(),
+      });
+      await friendRequest.save();
+      res.sendStatus(204);
+    } catch (error) {
+      next(error);
+    }
+  },
+];
+
+exports.confirmFriendRequest = [
   verifyAccessToken,
   verifyUser,
   async (req, res, next) => {

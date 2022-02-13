@@ -1,8 +1,12 @@
 @import url('./base.css');
+@import url('./views/landing-page.css');
+@import url('./views/404.css');
+@import url('./views/login.css');
+@import url('./views/signup.css');
+@import url('./views/profile.css');
 @import url('./post.css');
 @import url('./comment.css');
-@import url('./signup.css');
-@import url('./profile.css');
+@import url('./friendlist.css');
 
 .landing,
 .login,
@@ -24,10 +28,13 @@
 }
 
 .header {
-  padding: 0.5rem 1.5rem 0;
+  padding: 0.5rem 1.5rem;
   font-family: var(--font-logo);
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  background: var(--secondary-bg-color);
+  border-bottom: 1px solid rgb(51, 51, 51);
 }
 
 .header__brand {
@@ -36,165 +43,92 @@
   font-size: 24px;
 }
 
-.landing .header__brand {
-  color: var(--text-reverse-color);
-}
-
-.landing__main {
-  padding: 0 1.5rem;
-  margin: 0;
-}
-
-.landing__headline {
-  color: #111;
-  margin-top: 7rem;
-  margin-bottom: 1.5rem;
-}
-
-.landing__headline {
-  color: #f8f8f8;
-  text-shadow: 1px 2px 2px #000;
-  padding: 3rem;
-  position: relative;
-  z-index: 1;
-}
-
-.landing__headline::before {
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 100%;
-  top: 0.4rem;
-  left: 0.4rem;
-  border-radius: 1rem;
-  background: var(--blue);
-  z-index: -1000;
-}
-
-.landing__headline::after {
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: #18191a;
-  border-radius: 1rem;
-  z-index: -1;
-  box-shadow: inset 0 0 2px #fff;
-}
-
-@media (max-width: 450px) {
-  .landing__headline {
-    padding: 3rem 2rem;
-    margin-top: 2.5rem;
-  }
-
-  .landing__headline h1 {
-    font-size: 24px;
-  }
-}
-
-.landing__cta {
-  background: #2275c1;
-  color: #f8f8f8;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 0.5rem 2.3rem;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px #000;
-  margin-top: 2rem;
-}
-
-.not-found .header__brand {
-  color: #ddd;
-}
-
-.not-found h1 {
-  margin: 1rem 1.5rem;
-}
-
-.login .header__brand {
-  color: var(--text-reverse-color);
-}
-
-.login__form {
-  max-width: 400px;
-  margin: 1rem;
-  padding: 1.5rem;
-  background: var(--modal-bg-color);
-  box-shadow: 0 1px 4px #000;
-  border-radius: 4px;
+.header nav {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-@media (min-width: 450px) {
-  .login__form {
-    margin: 1rem auto;
+.header a,
+.header button {
+  color: var(--main-text-color);
+}
+
+.header__currentUser {
+  font-weight: bold;
+  border-radius: 1rem;
+  padding: 0.2rem 0.6rem;
+  text-decoration: none;
+  display: flex;
+  gap: 8px;
+}
+
+.header__currentUser:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 400px) {
+  .header__currentUser span {
+    display: none;
   }
 }
 
-.login__form legend {
+.friendRequests__container {
+  position: relative;
+}
+
+.svg-friends {
+  fill: var(--main-text-color);
+  vertical-align: middle;
+}
+
+.friendRequests {
+  position: fixed;
+  background: var(--secondary-bg-color);
+  padding: 1rem 1.5rem;
+  top: 3.3rem;
+  right: 0;
+  width: 400px;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+@media (max-width: 400px) {
+  .friendRequests {
+    width: 95vw;
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+.friendRequests > p {
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 
-.login__formInput {
-  padding: 0.8rem 0.8rem;
-  font-size: 14px;
-  background: transparent;
-  color: var(--form-input-text);
-  border: var(--form-border-color);
-  border-radius: 4px;
-}
-
-.login__formInput:not(:first-child) {
-  margin-top: 0.5rem;
-}
-
-.login__error {
-  margin: 0.5rem 0;
-  font-size: 12px;
-  color: rgb(231, 58, 66);
-}
-
-.login hr {
+.friendRequests li {
   margin: 1rem 0;
-  opacity: 0.5;
+  display: flex;
+  justify-content: space-between;
 }
 
-.login__btn {
-  padding: 0.7rem 0.8rem;
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
+.friendRequest__info {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.friendRequest__btn {
+  padding: 0.2rem 0.4rem;
+  transition: background 0.15s ease-out;
   border-radius: 4px;
-  transition: opacity 0.5s ease-out;
 }
 
-.login__btn:hover {
-  opacity: 0.8;
+.btn-confirm:hover {
+  background-color: var(--blue);
 }
 
-.login__logInBtn {
-  background-color: #1877f2;
-  margin-top: 0.5rem;
-}
-
-.login__logInBtn:focus {
-  outline: 2px solid #29487d;
-}
-
-.login__newAccountBtn {
-  background-color: var(--green);
-  width: max-content;
-  text-decoration: none;
-  margin: 0 auto;
-}
-
-.login__newAccountBtn:focus {
-  outline: 2px solid var(--green-on-focus);
+.btn-delete:hover {
+  background-color: crimson;
 }
 
 .home main {
@@ -266,40 +200,6 @@
 .profilePicture--small {
   width: 28px;
   height: 28px;
-}
-
-.friendlist {
-  display: flex;
-  flex-direction: column;
-}
-
-.friendlist--sidebar {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  padding: 1rem;
-  width: 100%;
-  max-width: 250px;
-}
-
-.friendlist--sidebar h4 {
-  margin-bottom: 1rem;
-}
-
-.friendlist--sidebar li {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-@media (max-width: 1200px) {
-  .friendlist--sidebar {
-    display: none;
-  }
-}
-
-.friendlist li {
-  margin-bottom: 0.8rem;
 }
 
 .logo--large {

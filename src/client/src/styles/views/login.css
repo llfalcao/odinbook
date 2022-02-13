@@ -1,0 +1,82 @@
+.login .header__brand {
+  color: var(--text-reverse-color);
+}
+
+.login__form {
+  max-width: 400px;
+  margin: 1rem;
+  padding: 1.5rem;
+  background: var(--modal-bg-color);
+  box-shadow: 0 1px 4px #000;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 450px) {
+  .login__form {
+    margin: 1rem auto;
+  }
+}
+
+.login__form legend {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.login__formInput {
+  padding: 0.8rem 0.8rem;
+  font-size: 14px;
+  background: transparent;
+  color: var(--form-input-text);
+  border: var(--form-border-color);
+  border-radius: 4px;
+}
+
+.login__formInput:not(:first-child) {
+  margin-top: 0.5rem;
+}
+
+.login__error {
+  margin: 0.5rem 0;
+  font-size: 12px;
+  color: rgb(231, 58, 66);
+}
+
+.login hr {
+  margin: 1rem 0;
+  opacity: 0.5;
+}
+
+.login__btn {
+  padding: 0.7rem 0.8rem;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 4px;
+  transition: opacity 0.5s ease-out;
+}
+
+.login__btn:hover {
+  opacity: 0.8;
+}
+
+.login__logInBtn {
+  background-color: #1877f2;
+  margin-top: 0.5rem;
+}
+
+.login__logInBtn:focus {
+  outline: 2px solid #29487d;
+}
+
+.login__newAccountBtn {
+  background-color: var(--green);
+  width: max-content;
+  text-decoration: none;
+  margin: 0 auto;
+}
+
+.login__newAccountBtn:focus {
+  outline: 2px solid var(--green-on-focus);
+}
