@@ -12,7 +12,6 @@ export default function FriendRequests({ hidden }) {
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
-      console.log(currentUser);
       const { sent, received } = await fetchFriendRequests(currentUser._id);
       setFriendRequests((friendRequests) => ({
         ...friendRequests,

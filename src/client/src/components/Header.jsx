@@ -41,7 +41,7 @@ function Header({ user }) {
             </button>
             <FriendRequests hidden={!nav.friendRequests} />
           </div>
-          <button type="button" onClick={logout}>
+          <button type="button" onClick={logout} className="header__logoutBtn">
             Sign out
           </button>
         </nav>

@@ -57,7 +57,7 @@
 .header__currentUser {
   font-weight: bold;
   border-radius: 1rem;
-  padding: 0.2rem 0.6rem;
+  padding: 0.3rem 0.6rem 0;
   text-decoration: none;
   display: flex;
   gap: 8px;
@@ -67,10 +67,14 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .header__currentUser span {
     display: none;
   }
+}
+
+.header__logoutBtn {
+  margin-left: 1rem;
 }
 
 .friendRequests__container {
