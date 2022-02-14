@@ -25,6 +25,7 @@
     --form-border-color: 1px solid #333;
     --btn-text: #c4c4c4;
     --btn-bg: #c4c4c44b;
+    --header-bg: #222;
   }
 }
 
@@ -40,6 +41,7 @@
     --form-border-color: 1px solid rgb(221, 223, 226);
     --btn-text: #111;
     --btn-bg: #c4c4c480;
+    --header-bg: #f4f4f4;
   }
 }
 
