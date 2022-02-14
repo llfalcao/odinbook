@@ -113,7 +113,11 @@ export default function Post({
             <LikeIcon />
             Like
           </button>
-          <button type="button" className="post__btn post__btn--comment">
+          <button
+            type="button"
+            className="post__btn post__btn--comment"
+            onClick={() => document.querySelector('textarea').focus()}
+          >
             <CommentIcon />
             Comment
           </button>
@@ -146,7 +150,7 @@ export default function Post({
       </form>
 
       {linkToComments ? (
-        <Link to={`p/${postId}`} className="view-comments">
+        <Link to={`/odinbook/p/${postId}`} className="view-comments">
           View comments
         </Link>
       ) : null}
