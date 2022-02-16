@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchFriends } from '../api/users';
 
 export default function Friendlist({ username }) {
@@ -14,10 +15,12 @@ export default function Friendlist({ username }) {
       <ul>
         {friends.map((user) => (
           <li key={user._id}>
-            <div className="profilePicture profilePicture--small">
-              <img src={user.profile_pic} alt="" />
-            </div>
-            <p>{user.full_name}</p>
+            <Link to={`/odinbook/u/${user.username}`}>
+              <div className="profilePicture profilePicture--small">
+                <img src={user.profile_pic} alt="" />
+              </div>
+              <p>{user.full_name}</p>
+            </Link>
           </li>
         ))}
       </ul>

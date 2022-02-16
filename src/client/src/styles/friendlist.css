@@ -16,10 +16,11 @@
   margin-bottom: 1rem;
 }
 
-.friendlist--sidebar li {
+.friendlist--sidebar a {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  color: var(--main-text-color);
 }
 
 @media (max-width: 1200px) {
