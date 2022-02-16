@@ -7,8 +7,9 @@ import {
   sendFriendRequest,
 } from '../api/users';
 import Header from '../components/Header';
-import { AboutIcon, LoadingIcon } from '../components/Icons';
+import { AboutIcon, LoadingIcon, PictureUpdateIcon } from '../components/Icons';
 import NewPostCTA from '../components/NewPostCTA';
+import PictureUpdater from '../components/PictureUpdater';
 import Post from '../components/Post';
 
 export default function Profile({ user: currentUser }) {
@@ -16,22 +17,24 @@ export default function Profile({ user: currentUser }) {
   const [user, setUser] = useState();
   const [posts, setPosts] = useState();
   const [isFriendshipPending, setIsFriendshipPending] = useState();
+  const [modal, setModal] = useState(false);
 
   const url = window.location.href.split('/');
   const username = url[url.length - 1];
 
   useEffect(() => {
-    (async () => {
+    const loadUserData = async () => {
       const user = await fetchUser(username);
       if (user === 'User not found') {
         return navigate('/odinbook/not-found');
       }
       const { sent } = await fetchFriendRequests(currentUser._id);
-      setIsFriendshipPending(sent.includes(user._id));
       const posts = await fetchUserPosts(username);
+      setIsFriendshipPending(sent.includes(user._id));
       setUser(user);
       setPosts(posts);
-    })();
+    };
+    loadUserData();
   }, [username, navigate, currentUser]);
 
   const requestFriendship = async () => {
@@ -49,23 +52,34 @@ export default function Profile({ user: currentUser }) {
           <div>
             <div className="profilePicture">
               <img src={user.profile_pic} alt="ProfilePic" />
+              <button
+                type="button"
+                className="profilePicture__updateBtn"
+                onClick={() => setModal(true)}
+              >
+                <PictureUpdateIcon />
+              </button>
             </div>
             <h1>{user.full_name}</h1>
           </div>
-          <div className="profileCard__links">
-            <Link to="about">
-              <AboutIcon />
-              <span>About</span>
-            </Link>
-            <Link to="friends">
-              <span>{user.friends.length}</span>
-              <span>Friends</span>
-            </Link>
-            <Link to={`/odinbook/u/${user.username}`}>
-              <span>{user.total_posts}</span>
-              <span>Posts</span>
-            </Link>
-          </div>
+          {modal ? (
+            <PictureUpdater user={currentUser} close={() => setModal(false)} />
+          ) : (
+            <div className="profileCard__links">
+              <Link to="about">
+                <AboutIcon />
+                <span>About</span>
+              </Link>
+              <Link to="friends">
+                <span>{user.friends.length}</span>
+                <span>Friends</span>
+              </Link>
+              <Link to={`/odinbook/u/${user.username}`}>
+                <span>{user.total_posts}</span>
+                <span>Posts</span>
+              </Link>
+            </div>
+          )}
 
           {currentUser.username !== user.username &&
             (!currentUser.friends.includes(user._id) ? (

@@ -32,6 +32,16 @@ export async function createUser(data) {
   });
 }
 
+export async function updateUser(id, data) {
+  const api = userApis.update;
+  const token = localStorage.getItem('token');
+  return await fetch(`${api.url}/${id}/update`, {
+    method: api.method,
+    headers: { Authorization: `Bearer ${token}`, ...api.headers },
+    body: JSON.stringify(data),
+  });
+}
+
 export async function fetchFriendRequests(userId) {
   const api = userApis.read;
   const token = localStorage.getItem('token');
