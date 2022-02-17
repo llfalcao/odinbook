@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getCurrentUser } from '../api/auth';
-import { addFriend, fetchFriendRequests } from '../api/users';
+import {
+  fetchFriendRequests,
+  addFriend,
+  deleteFriendRequest,
+} from '../api/users';
 
 export default function FriendRequests({ hidden }) {
   const [friendRequests, setFriendRequests] = useState({
@@ -34,12 +38,23 @@ export default function FriendRequests({ hidden }) {
     }));
   };
 
+  const deleteRequest = async (requestId) => {
+    const currentUser = await getCurrentUser();
+    const response = await deleteFriendRequest(currentUser._id, requestId);
+    if (response.status !== 204) return;
+    setFriendRequests((reqs) => ({
+      sent: reqs.sent.filter((req) => req._id !== requestId),
+      received: reqs.received.filter((req) => req._id !== requestId),
+    }));
+  };
+
   if (hidden) return <></>;
 
   return (
     <div className="friendRequests">
       <p>Sent</p>
       <ul>
+        {console.log(friendRequests)}
         {friendRequests.sent.length > 0 ? (
           friendRequests.sent.map((req) => (
             <li key={req._id}>
@@ -50,7 +65,11 @@ export default function FriendRequests({ hidden }) {
                 <span>{req.user_info.full_name}</span>
               </div>
 
-              <button type="button" className="friendRequest__btn btn-delete">
+              <button
+                type="button"
+                className="friendRequest__btn btn-delete"
+                onClick={() => deleteRequest(req._id)}
+              >
                 Delete
               </button>
             </li>
@@ -82,8 +101,11 @@ export default function FriendRequests({ hidden }) {
               >
                 Confirm
               </button>
-              <button type="button" className="friendRequest__btn btn-delete">
-                {/* todo: delete friend request */}
+              <button
+                type="button"
+                className="friendRequest__btn btn-delete"
+                onClick={() => deleteRequest(req._id)}
+              >
                 Delete
               </button>
             </div>

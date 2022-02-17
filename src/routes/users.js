@@ -12,6 +12,10 @@ router.post(
   '/:user/friend-requests/confirm',
   userController.confirmFriendRequest,
 );
+router.delete(
+  '/:user/friend-requests/delete',
+  userController.deleteFriendRequest,
+);
 router.post('/create', userController.userCreate);
 router.put('/:user/update', userController.userUpdate);
 router.delete('/:user/delete', userController.userDelete);

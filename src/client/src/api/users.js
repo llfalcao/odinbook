@@ -86,3 +86,12 @@ export async function addFriend(userId, friendId, requestId) {
     },
   );
 }
+
+export async function deleteFriendRequest(userId, requestId) {
+  const api = userApis.delete;
+  const token = localStorage.getItem('token');
+  return await fetch(
+    `${api.url}/${userId}/friend-requests/delete?id=${requestId}`,
+    { method: api.method, headers: { Authorization: `Bearer ${token}` } },
+  );
+}

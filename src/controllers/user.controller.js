@@ -192,3 +192,22 @@ exports.confirmFriendRequest = [
     }
   },
 ];
+
+exports.deleteFriendRequest = [
+  verifyAccessToken,
+  verifyUser,
+  async (req, res, next) => {
+    try {
+      const { deletedCount } = await FriendRequest.deleteOne({
+        _id: req.query.id,
+      }).exec();
+      if (deletedCount === 1) {
+        res.sendStatus(204);
+      } else {
+        next();
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+];
