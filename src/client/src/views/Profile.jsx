@@ -14,28 +14,38 @@ import Post from '../components/Post';
 
 export default function Profile({ user: currentUser }) {
   const navigate = useNavigate();
-  const [user, setUser] = useState();
-  const [posts, setPosts] = useState();
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState(null);
   const [isFriendshipPending, setIsFriendshipPending] = useState();
   const [modal, setModal] = useState(false);
 
   const url = window.location.href.split('/');
   const username = url[url.length - 1];
 
+  const loadUserData = async (username) => {
+    const user = await fetchUser(username);
+    if (user === 'User not found') {
+      console.log(3);
+      return navigate('/odinbook/not-found');
+    }
+    const { sent } = await fetchFriendRequests(currentUser._id);
+    const posts = await fetchUserPosts(username);
+    setIsFriendshipPending(sent.some((req) => req.to === user._id));
+    setUser(user);
+    setPosts(posts);
+  };
+
   useEffect(() => {
-    const loadUserData = async () => {
-      const user = await fetchUser(username);
-      if (user === 'User not found') {
-        return navigate('/odinbook/not-found');
-      }
-      const { sent } = await fetchFriendRequests(currentUser._id);
-      const posts = await fetchUserPosts(username);
-      setIsFriendshipPending(sent.includes(user._id));
-      setUser(user);
-      setPosts(posts);
+    (async () => {
+      await loadUserData(username);
+    })();
+
+    return () => {
+      setPosts(undefined);
+      setIsFriendshipPending(undefined);
+      setUser(null);
     };
-    loadUserData();
-  }, [username, navigate, currentUser]);
+  }, [username]);
 
   const requestFriendship = async () => {
     await sendFriendRequest(currentUser._id, user._id);
@@ -52,18 +62,27 @@ export default function Profile({ user: currentUser }) {
           <div>
             <div className="profilePicture">
               <img src={user.profile_pic} alt="ProfilePic" />
-              <button
-                type="button"
-                className="profilePicture__updateBtn"
-                onClick={() => setModal(true)}
-              >
-                <PictureUpdateIcon />
-              </button>
+              {currentUser.username === user.username && (
+                <button
+                  type="button"
+                  className="profilePicture__updateBtn"
+                  onClick={() => setModal(true)}
+                >
+                  <PictureUpdateIcon />
+                </button>
+              )}
             </div>
             <h1>{user.full_name}</h1>
           </div>
           {modal ? (
-            <PictureUpdater user={currentUser} close={() => setModal(false)} />
+            <PictureUpdater
+              user={currentUser}
+              close={() => setModal(false)}
+              reload={async () => {
+                setModal(false);
+                setUser(await fetchUser(username));
+              }}
+            />
           ) : (
             <div className="profileCard__links">
               <Link to="about">
@@ -85,6 +104,7 @@ export default function Profile({ user: currentUser }) {
             (!currentUser.friends.includes(user._id) ? (
               isFriendshipPending ? (
                 <button type="button" className="profileCard__requestBtn">
+                  {/* Todo: undo request */}
                   Request Sent
                 </button>
               ) : (
@@ -97,7 +117,13 @@ export default function Profile({ user: currentUser }) {
                 </button>
               )
             ) : (
-              <div>Friends</div>
+              <button
+                type="button"
+                className="profileCard__requestBtn"
+                onClick={requestFriendship}
+              >
+                Friends
+              </button>
             ))}
         </div>
 

@@ -241,3 +241,56 @@
   font-family: var(--font-logo);
   font-weight: bold;
 }
+
+.pictureForm {
+  margin-top: 1rem;
+  width: 70%;
+}
+
+.pictureForm__input {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.pictureForm__input input {
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.pictureForm__input p {
+  position: absolute;
+  top: 1.8rem;
+  left: 0;
+  color: crimson;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.pictureForm__btnContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pictureForm button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: #f4f4f4;
+  transition: background 0.15s ease-out;
+}
+
+.pictureForm .update-btn {
+  background: var(--blue);
+}
+.pictureForm .update-btn:hover {
+  background: var(--blue-on-hover);
+}
+
+.pictureForm .cancel-btn {
+  background: var(--red);
+}
+
+.pictureForm .cancel-btn:hover {
+  background: var(--red-on-hover);
+}

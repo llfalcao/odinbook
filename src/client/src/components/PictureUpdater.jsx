@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { updateUser } from '../api/users';
 
-export default function PictureUpdater({ user, close }) {
+export default function PictureUpdater({ user, close, reload }) {
   const [url, setUrl] = useState('');
   const [error, setError] = useState('');
 
@@ -39,20 +39,25 @@ export default function PictureUpdater({ user, close }) {
     await updateUser(user._id, {
       profile_pic: url,
     });
+    reload();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input type="text" onChange={(e) => setUrl(e.target.value)} />
+    <form onSubmit={handleSubmit} className="pictureForm">
+      <div className="pictureForm__input">
+        <input
+          type="text"
+          placeholder="Image url (e.g. https://imgur.com/...)"
+          onChange={(e) => setUrl(e.target.value)}
+        />
         {error && <p>{error}</p>}
       </div>
 
-      <div>
-        <button type="button" onSubmit={handleSubmit}>
+      <div className="pictureForm__btnContainer">
+        <button type="button" className="update-btn" onClick={handleSubmit}>
           Update
         </button>
-        <button type="button" onClick={close}>
+        <button type="button" className="cancel-btn" onClick={close}>
           Cancel
         </button>
       </div>

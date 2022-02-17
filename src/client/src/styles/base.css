@@ -10,6 +10,8 @@
   --green: #00a400;
   --green-on-focus: #2b9217;
   --green-on-hover: #068a06;
+  --red: rgb(220, 20, 60);
+  --red-on-hover: rgb(204, 27, 62);
   --font-logo: 'Titillium Web', sans-serif;
 }
 
