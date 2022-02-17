@@ -23,6 +23,7 @@ export async function createUser(data) {
   const user = { location, ...data };
   delete user.city;
   delete user.country;
+  user.date_of_birth = new Date(user.date_of_birth).toISOString();
 
   const api = userApis.create;
   return await fetch(`${api.url}/create`, {

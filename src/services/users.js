@@ -107,6 +107,7 @@ exports.validateUserInput = (fields) => {
         if (age < 13) {
           throw new Error('You must be at least 13 years old to sign up.');
         }
+        return true;
       }),
 
     country: body('location.country', 'Country required').trim().notEmpty(),

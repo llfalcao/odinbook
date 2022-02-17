@@ -1,10 +1,12 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect, useState } from 'react';
 import { createUser } from '../api/users';
+import { handleLogin } from '../api/auth';
 
 export default function SignUp({ authenticate, status, token }) {
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState();
   const [form, setForm] = useState({
     first_name: '',
@@ -100,8 +102,20 @@ export default function SignUp({ authenticate, status, token }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     let res = await createUser(form);
-    res = await res.json();
+    if (res.status === 200) {
+      const { accessToken } = await handleLogin({
+        username: form.username,
+        password: form.password,
+      });
 
+      if (accessToken) {
+        localStorage.setItem('token', accessToken);
+        await authenticate();
+        return navigate('/odinbook');
+      }
+    }
+
+    res = await res.json();
     if (res.errors) {
       const { errors: err } = res;
       setErrors(

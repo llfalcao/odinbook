@@ -83,6 +83,7 @@ export default function FriendRequests({ hidden }) {
                 Confirm
               </button>
               <button type="button" className="friendRequest__btn btn-delete">
+                {/* todo: delete friend request */}
                 Delete
               </button>
             </div>
