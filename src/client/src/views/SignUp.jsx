@@ -1,30 +1,23 @@
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect, useState } from 'react';
 import { createUser } from '../api/users';
 import { handleLogin } from '../api/auth';
 
 export default function SignUp({ authenticate, status, token }) {
   const navigate = useNavigate();
-  const [startDate, setStartDate] = useState();
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
     username: '',
     password: '',
     password_confirmation: '',
-    date_of_birth: '',
+    date_of_birth: { day: 1, month: 'January', year: 2022 },
     city: '',
     country: '',
   });
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    // Minimum age of 13 years old to sign up, just like Facebook...
-    const date = new Date();
-    setStartDate(date);
-    setForm((form) => ({ ...form, date_of_birth: date.toUTCString() }));
     // UX
     const input = document.querySelector('input');
     if (input) input.focus();
@@ -75,11 +68,18 @@ export default function SignUp({ authenticate, status, token }) {
     }
   };
 
-  const onChange = (e, date) => {
+  const onChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: date || value });
+    if (name === 'day' || name === 'month' || name === 'year') {
+      setForm({
+        ...form,
+        date_of_birth: { ...form.date_of_birth, [name]: value },
+      });
+      return;
+    }
+    setForm({ ...form, [name]: value });
     setErrors((errors) => {
-      const errorMsg = handleErrors(name, date || value);
+      const errorMsg = handleErrors(name, value);
       if (name === 'password') {
         if (errorMsg === 'Passwords do not match.') {
           delete errors[name];
@@ -190,15 +190,41 @@ export default function SignUp({ authenticate, status, token }) {
           <p className="signup__error">{errors.password_confirmation}</p>
         )}
         <fieldset className="signup__birthdate">
-          <label htmlFor="birthdate">Date of birth</label>
-          <DatePicker
-            id="birthdate"
-            name="date_of_birth"
-            selected={startDate}
-            onChange={(date, e) => {
-              setStartDate(date);
-              onChange(e, date);
-            }}
+          <legend>Date of birth (day/month/year)</legend>
+          <input
+            type="number"
+            min="1"
+            max="31"
+            name="day"
+            defaultValue={1}
+            onChange={onChange}
+          />
+          <select
+            type="number"
+            name="month"
+            placeholder="January"
+            onChange={onChange}
+          >
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <input
+            type="number"
+            min="1905"
+            max={new Date().getFullYear()}
+            name="year"
+            placeholder="Year"
+            onChange={onChange}
           />
         </fieldset>
         {errors.date_of_birth && (
@@ -223,7 +249,7 @@ export default function SignUp({ authenticate, status, token }) {
             />
           </div>
           {errors.country && (
-            <p className="signup__error" style={{ textAlign: 'right' }}>
+            <p className="signup__error" style={{ marginLeft: 'auto' }}>
               {errors.country}
             </p>
           )}

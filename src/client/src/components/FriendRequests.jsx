@@ -54,7 +54,6 @@ export default function FriendRequests({ hidden }) {
     <div className="friendRequests">
       <p>Sent</p>
       <ul>
-        {console.log(friendRequests)}
         {friendRequests.sent.length > 0 ? (
           friendRequests.sent.map((req) => (
             <li key={req._id}>

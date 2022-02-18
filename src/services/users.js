@@ -103,7 +103,10 @@ exports.validateUserInput = (fields) => {
       .trim()
       .notEmpty()
       .custom((value) => {
-        const age = moment().diff(moment(value), 'years');
+        const now = moment();
+        console.log(now);
+        const age = now.diff(moment(value), 'years');
+        console.log(age);
         if (age < 13) {
           throw new Error('You must be at least 13 years old to sign up.');
         }

@@ -23,7 +23,9 @@ export async function createUser(data) {
   const user = { location, ...data };
   delete user.city;
   delete user.country;
-  user.date_of_birth = new Date(user.date_of_birth).toISOString();
+  const { day, month, year } = user.date_of_birth;
+  const date = new Date(`${year}/${month}/${day}`).toISOString();
+  user.date_of_birth = date;
 
   const api = userApis.create;
   return await fetch(`${api.url}/create`, {
