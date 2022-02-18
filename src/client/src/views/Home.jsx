@@ -6,6 +6,7 @@ import { LoadingIcon } from '../components/Icons';
 import { fetchPostFeed } from '../api/posts';
 import Friendlist from '../components/Friendlist';
 import NewPostCTA from '../components/NewPostCTA';
+import Sidebar from '../components/Sidebar';
 
 function Home({ user, status, token }) {
   const [posts, setPosts] = useState();
@@ -18,6 +19,8 @@ function Home({ user, status, token }) {
     <div className="home">
       <Header user={user} />
       <div className="columns">
+        <Sidebar user={user} />
+
         <main>
           <NewPostCTA user={user} />
           <section className="posts">

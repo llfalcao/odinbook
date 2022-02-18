@@ -4,6 +4,7 @@
 @import url('./views/login.css');
 @import url('./views/signup.css');
 @import url('./views/profile.css');
+@import url('./views/sidebar.css');
 @import url('./post.css');
 @import url('./comment.css');
 @import url('./friendlist.css');
@@ -75,16 +76,27 @@
 }
 
 .header__logoutBtn {
-  margin-left: 1rem;
+  margin: 0 0 0.4rem;
+  transition: 0.15s ease-out;
+  padding: 0.2rem 0.5rem 0.3rem;
+  border-radius: 4px;
+}
+
+.header__logoutBtn:hover {
+  background-color: var(--red-on-hover);
 }
 
 .friendRequests__container {
   position: relative;
 }
 
-.svg-friends {
+.header .svg-friends {
   fill: var(--main-text-color);
-  vertical-align: middle;
+  transition: 0.1s ease-out;
+}
+
+.friendRequests__container button:hover .svg-friends {
+  fill: var(--blue);
 }
 
 .friendRequests {

@@ -20,7 +20,7 @@
     color: #eee;
     --main-bg-color: #18191a;
     --secondary-bg-color: #222;
-    --main-text-color: #eee;
+    --main-text-color: rgb(218, 220, 224);
     --text-reverse-color: #111;
     --modal-bg-color: #222;
     --form-input-text: #f8f8f8;
@@ -28,6 +28,7 @@
     --btn-text: #c4c4c4;
     --btn-bg: #c4c4c44b;
     --header-bg: #222;
+    --gray-hover: rgb(47, 48, 49);
   }
 }
 
@@ -44,6 +45,7 @@
     --btn-text: #111;
     --btn-bg: #c4c4c480;
     --header-bg: #f4f4f4;
+    --gray-hover: #eee;
   }
 }
 
