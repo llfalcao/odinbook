@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { LoadingIcon } from '../components/Icons';
+import { BackArrowIcon, LoadingIcon } from '../components/Icons';
 import { createPost } from '../api/posts';
 
 export default function PostCreator({ user }) {
@@ -22,15 +22,23 @@ export default function PostCreator({ user }) {
     }
   }
 
+  const loadPreviousPage = () => {
+    window.history.back();
+  };
+
   if (!user) return <LoadingIcon />;
 
-  // todo: return home arrow btn
   return (
     <div>
-      <Header />
+      <Header user={user} />
 
       <form className="post-form">
-        <h1>Create post</h1>
+        <h1>
+          <button type="button" onClick={loadPreviousPage}>
+            <BackArrowIcon />
+          </button>
+          Create post
+        </h1>
 
         <textarea
           className="post-form__body"

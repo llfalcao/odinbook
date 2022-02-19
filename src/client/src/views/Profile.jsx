@@ -85,7 +85,7 @@ export default function Profile({ user: currentUser }) {
             />
           ) : (
             <div className="profileCard__links">
-              <Link to="about">
+              <Link to="##">
                 <AboutIcon />
                 <span>About</span>
               </Link>

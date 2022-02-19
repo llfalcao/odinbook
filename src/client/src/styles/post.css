@@ -185,6 +185,19 @@
 .post-form h1 {
   text-align: center;
   font-size: 20px;
+  position: relative;
+}
+
+.post-form h1 button {
+  position: absolute;
+  border-radius: 100%;
+  fill: var(--main-text-color);
+  left: 0;
+  margin-top: 0.3rem;
+}
+
+.post-form h1 button:hover {
+  fill: var(--blue);
 }
 
 .post-form__body {

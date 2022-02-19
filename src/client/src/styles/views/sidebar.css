@@ -24,7 +24,7 @@
   text-decoration: none;
   transition: 0.1s ease-out;
   font-weight: bold;
-  font-size: 0.96rem;
+  font-family: var(--font-logo);
 }
 
 #sidebar a:hover {
