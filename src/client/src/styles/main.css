@@ -139,6 +139,7 @@
   padding: 0.2rem 0.4rem;
   transition: background 0.15s ease-out;
   border-radius: 4px;
+  color: var(--main-text-color);
 }
 
 .btn-confirm:hover {

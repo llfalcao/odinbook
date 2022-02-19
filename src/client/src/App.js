@@ -9,6 +9,7 @@ import NotFound from './views/NotFound';
 import PostCreator from './views/PostCreator';
 import PostViewer from './views/PostViewer';
 import Profile from './views/Profile';
+import Header from './components/Header';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -28,8 +29,12 @@ function App() {
 
   useEffect(() => userAuth(), []);
 
+  const clearInfo = () => setUser(null);
+
   return (
     <BrowserRouter>
+      <Header user={user} clearInfo={clearInfo} />
+
       <Routes>
         <Route path="/" element={<Navigate to="/odinbook" />} />
         <Route path="/odinbook">
@@ -45,7 +50,6 @@ function App() {
               <SignUp authenticate={userAuth} status={status} token={token} />
             }
           />
-
           <Route
             index
             element={<Home user={user} status={status} token={token} />}

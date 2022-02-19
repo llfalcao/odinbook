@@ -1,11 +1,10 @@
 .landing__main {
-  padding: 0 1.5rem;
+  padding: 7rem 1.5rem 0;
   margin: 0;
 }
 
 .landing__headline {
   color: #111;
-  margin-top: 7rem;
   margin-bottom: 1.5rem;
 }
 

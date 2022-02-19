@@ -6,7 +6,6 @@ import {
   fetchFriendRequests,
   sendFriendRequest,
 } from '../api/users';
-import Header from '../components/Header';
 import { AboutIcon, LoadingIcon, PictureUpdateIcon } from '../components/Icons';
 import NewPostCTA from '../components/NewPostCTA';
 import PictureUpdater from '../components/PictureUpdater';
@@ -25,7 +24,6 @@ export default function Profile({ user: currentUser }) {
   const loadUserData = async (username) => {
     const user = await fetchUser(username);
     if (user === 'User not found') {
-      console.log(3);
       return navigate('/odinbook/not-found');
     }
     const { sent } = await fetchFriendRequests(currentUser._id);
@@ -56,7 +54,6 @@ export default function Profile({ user: currentUser }) {
 
   return (
     <>
-      <Header user={currentUser} />
       <main>
         <div className="profileCard">
           <div>

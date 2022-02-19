@@ -3,12 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import FriendRequests from './FriendRequests';
 import { FriendsIcon } from './Icons';
 
-function Header({ user }) {
+function Header({ user, clearInfo }) {
   const navigate = useNavigate();
   const [nav, setNav] = useState({ friendRequests: false });
 
   const logout = () => {
     localStorage.clear();
+    clearInfo();
     navigate('/odinbook/login');
   };
 

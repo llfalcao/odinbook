@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
 import { BackArrowIcon, LoadingIcon } from '../components/Icons';
 import { createPost } from '../api/posts';
 
@@ -30,8 +29,6 @@ export default function PostCreator({ user }) {
 
   return (
     <div>
-      <Header user={user} />
-
       <form className="post-form">
         <h1>
           <button type="button" onClick={loadPreviousPage}>

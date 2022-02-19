@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import LandingPage from './LandingPage';
-import Header from '../components/Header';
 import Post from '../components/Post';
 import { LoadingIcon } from '../components/Icons';
 import { fetchPostFeed } from '../api/posts';
@@ -17,7 +16,6 @@ function Home({ user, status, token }) {
 
   return (
     <div className="home">
-      <Header user={user} />
       <div className="columns">
         <Sidebar user={user} />
 
