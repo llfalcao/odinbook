@@ -1,7 +1,20 @@
-.not-found .header__brand {
-  color: #ddd;
-}
-
 .not-found h1 {
   margin: 1rem 1.5rem;
+  font-size: 18px;
+}
+
+.not-found .return {
+  margin: 0 1.5rem;
+  transition: 0.15s ease-out;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  background-color: var(--blue);
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.not-found .return:hover {
+  background-color: var(--blue-on-hover);
 }

@@ -57,7 +57,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound user={user} />} />
       </Routes>
     </BrowserRouter>
   );
