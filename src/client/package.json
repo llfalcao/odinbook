@@ -37,6 +37,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "mini-css-extract-plugin": "2.4.5"
+  },
+  "resolutions": {
+    "mini-css-extract-plugin": "2.4.5"
   }
 }
