@@ -133,7 +133,6 @@ export default function SignUp({ authenticate, status, token }) {
 
   return (
     <div className="signup">
-      <h1 className="logo--large">odinbook</h1>
       <form className="signup__form" onSubmit={onSubmit}>
         <legend>Sign up</legend>
         <fieldset className="signup__fullName">

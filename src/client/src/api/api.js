@@ -1,4 +1,4 @@
-const rootUri = 'http://llfalcao-odinbook.herokuapp.com';
+const rootUri = 'https://llfalcao-odinbook.herokuapp.com';
 const apiBasePath = `${rootUri}/api/v1`;
 
 export const login = {

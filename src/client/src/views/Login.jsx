@@ -72,7 +72,6 @@ export default function Login({ authenticate, status, token }) {
 
   return (
     <div className="login">
-      <h1 className="logo--large">odinbook</h1>
       <form className="login__form" onSubmit={onSubmit}>
         <legend>Log in</legend>
         <input
