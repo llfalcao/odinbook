@@ -29,6 +29,9 @@
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   padding: 0.5rem 1.5rem;
   font-family: var(--font-logo);
   display: flex;
@@ -203,9 +206,9 @@
 }
 
 .loading-icon {
-  width: 100%;
   margin: 2rem auto;
   animation: spin 0.7s infinite linear;
+  margin-left: 50%;
 }
 
 @keyframes spin {

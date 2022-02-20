@@ -1,12 +1,12 @@
 #sidebar {
-  position: absolute;
+  position: fixed;
   background: var(--main-bg-color);
   border-right: 1px solid var(--gray-hover);
-  z-index: 2;
-
-  height: calc(100vh - 3.4rem);
+  z-index: 1;
+  top: 3.4rem;
   padding: 1rem;
   width: 100%;
+  min-height: 100vh;
   max-width: 300px;
   display: flex;
   flex-direction: column;
