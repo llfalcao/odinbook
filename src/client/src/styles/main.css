@@ -38,6 +38,23 @@
   border-bottom: 1px solid var(--blue);
 }
 
+.header__menu {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.drawer-btn {
+  padding-top: 8px;
+  fill: var(--main-text-color);
+}
+
+@media (min-width: 1200px) {
+  .drawer-btn {
+    display: none;
+  }
+}
+
 .header__brand {
   color: var(--blue);
   font-weight: bold;

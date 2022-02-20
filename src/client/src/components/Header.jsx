@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FriendRequests from './FriendRequests';
-import { FriendsIcon } from './Icons';
+import { FriendsIcon, MenuIcon } from './Icons';
 
 function Header({ user, clearInfo }) {
   const navigate = useNavigate();
@@ -17,11 +17,23 @@ function Header({ user, clearInfo }) {
     setNav({ ...nav, [key]: !nav[key] });
   };
 
+  const toggleDrawer = () => {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('hidden');
+  };
+
   return (
     <header className="header">
-      <Link to="/odinbook" className="header__brand">
-        odinbook
-      </Link>
+      <div className="header__menu">
+        {user && (
+          <button type="button" className="drawer-btn" onClick={toggleDrawer}>
+            <MenuIcon />
+          </button>
+        )}
+        <Link to="/odinbook" className="header__brand">
+          odinbook
+        </Link>
+      </div>
       {user && (
         <nav>
           <Link

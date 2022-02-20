@@ -10,6 +10,7 @@ import { AboutIcon, LoadingIcon, PictureUpdateIcon } from '../components/Icons';
 import NewPostCTA from '../components/NewPostCTA';
 import PictureUpdater from '../components/PictureUpdater';
 import Post from '../components/Post';
+import Sidebar from '../components/Sidebar';
 
 export default function Profile({ user: currentUser }) {
   const navigate = useNavigate();
@@ -53,7 +54,8 @@ export default function Profile({ user: currentUser }) {
   if (!user) return <LoadingIcon />;
 
   return (
-    <>
+    <div className="profile">
+      <Sidebar user={user} />
       <main>
         <div className="profileCard">
           <div>
@@ -147,6 +149,6 @@ export default function Profile({ user: currentUser }) {
           )}
         </section>
       </main>
-    </>
+    </div>
   );
 }

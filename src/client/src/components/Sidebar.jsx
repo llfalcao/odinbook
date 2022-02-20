@@ -11,10 +11,8 @@ import {
 } from '../components/Icons';
 
 export default function Sidebar({ user }) {
-  // const user = { full_name: 'Full name w/ pic' };
-
   return (
-    <nav id="sidebar">
+    <nav id="sidebar" className={window.innerWidth < 1200 ? 'hidden' : ''}>
       <Link to={`/odinbook/u/${user.username}`} className="sidebar__user">
         <div className="profilePicture profilePicture--small">
           <img src={user.profile_pic} alt="" />
