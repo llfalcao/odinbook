@@ -270,7 +270,7 @@
 }
 
 .pictureForm__input {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   position: relative;
 }
 
@@ -282,7 +282,7 @@
 
 .pictureForm__input p {
   position: absolute;
-  top: 1.8rem;
+  top: 2.3rem;
   left: 0;
   color: crimson;
   font-weight: bold;
