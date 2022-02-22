@@ -31,7 +31,7 @@ function Home({ user, status, token }) {
                     author={post.user_id}
                     date={post.created_at}
                     body={post.body}
-                    userId={user.id}
+                    currentUser={user}
                     linkToComments={true}
                   />
                 );

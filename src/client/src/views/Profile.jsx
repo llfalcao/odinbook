@@ -137,7 +137,7 @@ export default function Profile({ user: currentUser }) {
                   author={user}
                   date={post.created_at}
                   body={post.body}
-                  userId={user._id}
+                  currentUser={currentUser}
                   linkToComments={true}
                 />
               ))

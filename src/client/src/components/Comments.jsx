@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchUserById } from '../api/users';
 
 export default function Comments({ data }) {
@@ -6,8 +7,8 @@ export default function Comments({ data }) {
 
   useEffect(() => {
     async function getAuthors() {
-      // Reduce database calls everytime there's a new comment
-      // This should filter the ones that already have the author info stored in state.
+      // Avoid doing a db call for all comments whenever there's a new one
+      // This should filter those that already have the author info stored in state.
       const newComments = data.filter(
         (item) => !comments.some((comment) => comment._id === item._id),
       );
@@ -34,11 +35,17 @@ export default function Comments({ data }) {
     <ul>
       {comments.map((comment) => (
         <li key={comment._id} className="comment">
-          <div className="comment__profilePicture">
-            <img src={comment.author.profile_pic} alt="" />
-          </div>
-          <div className="comment__bodyContainer">
-            <span className="comment__author">{comment.author.full_name}</span>
+          <Link to={`/odinbook/u/${comment.author.username}`}>
+            <div className="comment__profilePicture">
+              <img src={comment.author.profile_pic} alt="" />
+            </div>
+          </Link>
+          <div>
+            <Link to={`/odinbook/u/${comment.author.username}`}>
+              <span className="comment__author">
+                {comment.author.full_name}
+              </span>
+            </Link>
             <p className="comment__body">{comment.body}</p>
           </div>
         </li>

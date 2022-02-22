@@ -6,8 +6,8 @@
   top: 3.4rem;
   padding: 1rem;
   width: 100%;
-  min-height: 100vh;
   max-width: 300px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   transition: 0.15s ease-out;

@@ -3,12 +3,12 @@
   display: flex;
 }
 
-.comment .comment__profilePicture {
-  margin-right: 0.5rem;
+.comment a {
+  color: var(--main-text-color);
 }
 
-.comment__bodyContainer {
-  color: var(--main-text-color);
+.comment .comment__profilePicture {
+  margin-right: 0.5rem;
 }
 
 .comment__author {
@@ -19,5 +19,6 @@
 }
 
 .comment__body {
+  color: var(--main-text-color);
   font-size: 14px;
 }

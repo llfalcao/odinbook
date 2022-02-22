@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { LikeIcon, CommentIcon } from '../components/Icons';
+import {
+  LikeIcon,
+  CommentIcon,
+  MenuDotsIcon,
+  LinkIcon,
+  EditIcon,
+  TrashIcon,
+} from '../components/Icons';
 import { fetchLikes, toggleLike } from '../api/likes';
 import { submitComment } from '../api/comments';
 
@@ -10,31 +17,30 @@ export default function Post({
   author,
   date,
   body,
+  currentUser,
   linkToComments,
   reloadComments,
   children,
 }) {
   const [postData, setPostData] = useState({});
   const [comment, setComment] = useState({ post: postId, text: '' });
+
   // Fetch post likes
-  useEffect(
-    () =>
-      fetchLikes(postId).then((likes) =>
-        setPostData((postData) => ({
-          ...postData,
-          isLiked: likes.find(({ user_id }) => user_id === author.id),
-          likeCount: likes.length,
-          likes,
-        })),
-      ),
-    [author.id, postId],
-  );
+  useEffect(() => {
+    fetchLikes(postId).then((likes) =>
+      setPostData((postData) => ({
+        ...postData,
+        isLiked: likes.find(({ user_id }) => user_id === currentUser._id),
+        likeCount: likes.length,
+        likes,
+      })),
+    );
+  }, [currentUser._id, author.id, postId]);
 
   // Handle like button click
   async function onLike() {
     const response = await toggleLike(postId, postData.isLiked);
     if (response.status !== 204) return;
-
     let { isLiked, likeCount } = postData;
     setPostData((postData) => ({
       ...postData,
@@ -77,17 +83,53 @@ export default function Post({
   return (
     <div className="post">
       <header className="post__header">
-        <Link
-          to={`/odinbook/u/${author.username}`}
-          className="post__profilePicture"
-        >
-          <img src={author.profile_pic} alt="" />
-        </Link>
-        <div className="post__info">
-          <Link to={`/odinbook/u/${author.username}`} className="post__author">
-            {author.full_name}
+        <div>
+          <Link
+            to={`/odinbook/u/${author.username}`}
+            className="post__profilePicture"
+          >
+            <img src={author.profile_pic} alt="" />
           </Link>
-          <span className="post__date">{moment(date).fromNow()}</span>
+          <div className="post__info">
+            <Link
+              to={`/odinbook/u/${author.username}`}
+              className="post__author"
+            >
+              {author.full_name}
+            </Link>
+            <span className="post__date">{moment(date).fromNow()}</span>
+          </div>
+        </div>
+
+        <div className="post__menu">
+          <button type="button" className="post__menuBtn">
+            <MenuDotsIcon />
+          </button>
+          <ul className="post__menuContainer">
+            <li
+              className="post__menuItem"
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  `${window.location.hostname}/odinbook/p/${postId}`,
+                )
+              }
+            >
+              <LinkIcon />
+              Copy Link
+            </li>
+            {currentUser._id === author._id && (
+              <>
+                <li className="post__menuItem">
+                  <EditIcon />
+                  Edit
+                </li>
+                <li className="post__menuItem">
+                  <TrashIcon />
+                  Delete
+                </li>
+              </>
+            )}
+          </ul>
         </div>
       </header>
 
@@ -127,7 +169,7 @@ export default function Post({
 
       <form className="post__commentFieldContainer">
         <div className="comment__profilePicture">
-          <img src={author.profile_pic} alt="" />
+          <img src={currentUser.profile_pic} alt="" />
         </div>
         <div className="comment__textareaContainer">
           <textarea

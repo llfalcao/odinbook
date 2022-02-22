@@ -13,8 +13,14 @@
 
 .post__header {
   display: flex;
+  justify-content: space-between;
+}
+
+.post__header div:first-child {
+  display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  width: 100%;
 }
 
 .post__profilePicture {
@@ -46,6 +52,64 @@
 .post__date {
   opacity: 0.6;
   font-size: 11px;
+}
+
+.post__menu {
+  position: relative;
+}
+
+.post__menuBtn {
+  margin-left: auto;
+  border-radius: 100%;
+  padding: 0.3rem;
+}
+
+.post__menuBtn:hover {
+  background: var(--gray-hover);
+}
+
+.post__menuBtn svg {
+  display: block;
+  fill: var(--main-text-color);
+}
+
+.post__menuBtn:focus + .post__menuContainer {
+  transform: none;
+}
+
+.post__menuContainer {
+  position: absolute;
+  right: 0;
+  width: max-content;
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--gray-hover);
+  border-radius: 8px;
+  padding: 4px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: 0.15s 0.1s ease-out;
+}
+
+.post__menuItem {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 5rem 0.5rem 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.post__menuItem:not(:first-child) {
+  margin-top: 6px;
+}
+
+.post__menuItem:hover {
+  background-color: var(--gray-hover);
+}
+
+.post__menuItem svg {
+  fill: var(--blue);
 }
 
 .post__body {
