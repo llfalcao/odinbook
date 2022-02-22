@@ -119,10 +119,14 @@ export default function Post({
             </li>
             {currentUser._id === author._id && (
               <>
-                <li className="post__menuItem">
+                <Link
+                  to={`/odinbook/p/${postId}/edit`}
+                  className="post__menuItem"
+                >
                   <EditIcon />
                   Edit
-                </li>
+                </Link>
+
                 <li className="post__menuItem">
                   <TrashIcon />
                   Delete

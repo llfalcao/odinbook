@@ -29,7 +29,7 @@ exports.createPost = async (user, postData) => {
   ).exec();
 };
 
-exports.updatePost = (id, post) => Post.updateOne({ _id: id }, post).exec();
+exports.updatePost = (post) => Post.updateOne({ _id: post._id }, post).exec();
 
 exports.deletePost = async (id) => {
   const post = await Post.findOneAndDelete({ _id: id }).exec();

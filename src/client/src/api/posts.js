@@ -37,3 +37,13 @@ export async function createPost(post) {
     body: JSON.stringify(post),
   });
 }
+
+export async function updatePost(post) {
+  const api = postApis.update;
+  const token = localStorage.getItem('token');
+  return await fetch(`${api.url}/${post._id}/update`, {
+    headers: { Authorization: `Bearer ${token}`, ...api.headers },
+    method: api.method,
+    body: JSON.stringify(post),
+  });
+}

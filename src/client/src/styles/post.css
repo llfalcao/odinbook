@@ -98,6 +98,8 @@
   padding: 0.5rem 5rem 0.5rem 8px;
   border-radius: 4px;
   cursor: pointer;
+  color: var(--main-text-color);
+  text-decoration: none;
 }
 
 .post__menuItem:not(:first-child) {
@@ -289,7 +291,14 @@
   transition: 0.15s ease-out;
 }
 
-.post-form__submitBtn:hover,
+.post-form__submitBtn:hover {
+  filter: brightness(1.08);
+}
+
+.post-form__submitBtn:active {
+  filter: brightness(0.8);
+}
+
 .post-form__submitBtn:disabled {
   background-color: #333;
   opacity: 0.8;

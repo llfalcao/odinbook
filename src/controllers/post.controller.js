@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { verifyAccessToken } = require('../services/auth');
+const { verifyAccessToken, verifyUser } = require('../services/auth');
 const {
   fetchPosts,
   fetchPost,
@@ -48,6 +48,7 @@ exports.postCreate = [
 
 // todo: auth
 exports.postUpdate = [
+  verifyAccessToken,
   validatePost,
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -56,9 +57,7 @@ exports.postUpdate = [
     }
 
     try {
-      const { post: id } = req.params;
-      const { body: post } = req;
-      const result = await updatePost(id, post);
+      const result = await updatePost(req.body);
       if (result.matchedCount === 0) {
         return res.json('Post not found');
       }
