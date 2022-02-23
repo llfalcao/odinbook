@@ -7,6 +7,7 @@ import { fetchComments } from '../api/comments';
 import { getCurrentUser } from '../api/auth';
 import Comments from '../components/Comments';
 import Sidebar from '../components/Sidebar';
+import Friendlist from '../components/Friendlist';
 
 export default function PostViewer() {
   const url = window.location.href.split('/');
@@ -54,6 +55,7 @@ export default function PostViewer() {
           <LoadingIcon />
         )}
       </main>
+      <Friendlist username={currentUser.username} />
     </div>
   );
 }
