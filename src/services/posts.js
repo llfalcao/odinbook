@@ -33,10 +33,12 @@ exports.updatePost = (post) => Post.updateOne({ _id: post._id }, post).exec();
 
 exports.deletePost = async (id) => {
   const post = await Post.findOneAndDelete({ _id: id }).exec();
-  await User.findOneAndUpdate(
-    { user_id: post.user_id },
+  if (!post) return { deletedCount: 0 };
+  await User.updateOne(
+    { _id: post.user_id },
     { $inc: { total_posts: -1 } },
   ).exec();
+  return { deletedCount: 1 };
 };
 
 exports.validatePost = [

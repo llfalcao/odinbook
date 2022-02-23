@@ -46,7 +46,6 @@ exports.postCreate = [
   },
 ];
 
-// todo: auth
 exports.postUpdate = [
   verifyAccessToken,
   validatePost,
@@ -73,22 +72,22 @@ exports.postUpdate = [
   },
 ];
 
-// todo: auth
-exports.postDelete = async (req, res, next) => {
-  try {
-    const { post } = req.params;
-    const result = await deletePost(post);
-
-    if (result.deletedCount === 0) {
-      res.json('Post not found');
+exports.postDelete = [
+  verifyAccessToken,
+  async (req, res, next) => {
+    try {
+      const { post } = req.params;
+      const result = await deletePost(post);
+      if (result.deletedCount === 0) {
+        return res.status(404).json('Post not found');
+      }
+      res.sendStatus(200);
+    } catch (error) {
+      if (error.kind === 'ObjectId') {
+        res.json('Post not found');
+      } else {
+        next(error);
+      }
     }
-
-    res.sendStatus(200);
-  } catch (error) {
-    if (error.kind === 'ObjectId') {
-      res.json('Post not found');
-    } else {
-      next(error);
-    }
-  }
-};
+  },
+];

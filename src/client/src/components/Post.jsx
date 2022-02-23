@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetchLikes, toggleLike } from '../api/likes';
+import { submitComment } from '../api/comments';
 import {
   LikeIcon,
   CommentIcon,
@@ -9,8 +11,7 @@ import {
   EditIcon,
   TrashIcon,
 } from '../components/Icons';
-import { fetchLikes, toggleLike } from '../api/likes';
-import { submitComment } from '../api/comments';
+import { deletePost } from '../api/posts';
 
 export default function Post({
   postId,
@@ -22,6 +23,7 @@ export default function Post({
   reloadComments,
   children,
 }) {
+  const navigate = useNavigate();
   const [postData, setPostData] = useState({});
   const [comment, setComment] = useState({ post: postId, text: '' });
 
@@ -38,7 +40,7 @@ export default function Post({
   }, [currentUser._id, author.id, postId]);
 
   // Handle like button click
-  async function onLike() {
+  const onLike = async () => {
     const response = await toggleLike(postId, postData.isLiked);
     if (response.status !== 204) return;
     let { isLiked, likeCount } = postData;
@@ -47,10 +49,10 @@ export default function Post({
       isLiked: !isLiked,
       likeCount: isLiked ? likeCount - 1 : likeCount + 1,
     }));
-  }
+  };
 
   // Comment input
-  function onChange(e) {
+  const onChange = (e) => {
     if (e.target.value === '') {
       e.target.removeAttribute('style');
     } else {
@@ -58,27 +60,57 @@ export default function Post({
       e.target.style.height = `${e.target.scrollHeight}px`;
     }
     setComment({ ...comment, text: e.target.value });
-  }
+  };
 
-  async function handleCommentSubmission() {
+  const handleCommentSubmission = async () => {
     await submitComment(comment);
     if (children) reloadComments();
     setComment({ ...comment, text: '' });
     document.querySelector('textarea:focus').removeAttribute('style');
-  }
+  };
 
-  function onEnterPress(e) {
+  const onEnterPress = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
       handleCommentSubmission();
     }
-  }
+  };
 
-  function onSubmit(e) {
+  const onSubmit = (e) => {
     e.preventDefault();
     if (comment.text === '') return;
     handleCommentSubmission();
-  }
+  };
+
+  const toggleMenu = (e) => {
+    const menu = e.target.closest('.post__menu');
+    const container = menu.querySelector('.post__menuContainer');
+    container.classList.toggle('show-menu');
+  };
+
+  const toggleDeleteSubmenu = (e) => {
+    const btn = e.target.closest('.post__delete');
+    const submenu = btn.querySelector('.post__delete--submenu');
+    submenu.classList.toggle('delete-options');
+  };
+
+  const handlePostDelete = (id) => {
+    deletePost(id).then((response) => {
+      if (response.status === 200) {
+        navigate('/');
+      }
+    });
+  };
+
+  const hideMenu = (e) => {
+    const menu = e.target.closest('.post__menu');
+    const container = menu.querySelector('.post__menuContainer');
+    container.classList.remove('show-menu');
+
+    const btn = e.target.closest('.post__delete');
+    const submenu = btn.querySelector('.post__delete--submenu');
+    submenu.classList.remove('delete-options');
+  };
 
   return (
     <div className="post">
@@ -102,11 +134,11 @@ export default function Post({
         </div>
 
         <div className="post__menu">
-          <button type="button" className="post__menuBtn">
+          <button type="button" className="post__menuBtn" onClick={toggleMenu}>
             <MenuDotsIcon />
           </button>
-          <ul className="post__menuContainer">
-            <li
+          <div className="post__menuContainer">
+            <div
               className="post__menuItem"
               onClick={() =>
                 navigator.clipboard.writeText(
@@ -116,7 +148,7 @@ export default function Post({
             >
               <LinkIcon />
               Copy Link
-            </li>
+            </div>
             {currentUser._id === author._id && (
               <>
                 <Link
@@ -127,13 +159,34 @@ export default function Post({
                   Edit
                 </Link>
 
-                <li className="post__menuItem">
-                  <TrashIcon />
-                  Delete
-                </li>
+                <div className="post__menuItem post__delete">
+                  <div onClick={toggleDeleteSubmenu}>
+                    <TrashIcon />
+                    Delete
+                  </div>
+                  <div className="post__delete--submenu">
+                    <p>Are you sure?</p>
+                    <div>
+                      <button
+                        type="button"
+                        className="btn-delete"
+                        onClick={() => handlePostDelete(postId)}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-cancel"
+                        onClick={hideMenu}
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
-          </ul>
+          </div>
         </div>
       </header>
 
@@ -171,7 +224,7 @@ export default function Post({
         <hr className="hr" />
       </div>
 
-      <form className="post__commentFieldContainer">
+      <form className="post__commentFieldContainer" onSubmit={onSubmit}>
         <div className="comment__profilePicture">
           <img src={currentUser.profile_pic} alt="" />
         </div>
@@ -186,7 +239,6 @@ export default function Post({
           <button
             className="comment__sendBtn"
             type="submit"
-            onClick={onSubmit}
             aria-label="Submit comment"
             hidden={!comment.text}
           >

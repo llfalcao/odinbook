@@ -73,9 +73,9 @@
   fill: var(--main-text-color);
 }
 
-.post__menuBtn:focus + .post__menuContainer {
+/* .post__menuBtn:focus + .post__menuContainer {
   transform: none;
-}
+} */
 
 .post__menuContainer {
   position: absolute;
@@ -87,7 +87,12 @@
   padding: 4px;
   transform: scaleY(0);
   transform-origin: top;
-  transition: 0.15s 0.1s ease-out;
+  transition: 0.1s ease-out;
+  z-index: 1;
+}
+
+.show-menu {
+  transform: none;
 }
 
 .post__menuItem {
@@ -95,11 +100,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0.5rem 5rem 0.5rem 8px;
+  padding: 0.5rem;
+  width: 200px;
   border-radius: 4px;
   cursor: pointer;
   color: var(--main-text-color);
   text-decoration: none;
+  transition: 0.07s ease-out;
+  user-select: none;
 }
 
 .post__menuItem:not(:first-child) {
@@ -112,6 +120,46 @@
 
 .post__menuItem svg {
   fill: var(--blue);
+}
+
+.post__delete {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.post__delete--submenu {
+  position: absolute;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.delete-options {
+  position: relative;
+  transform: none;
+}
+
+.post__delete--submenu p {
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.post__delete--submenu .btn-delete {
+  background-color: var(--red);
+  padding: 0.2rem 1rem;
+  border-radius: 4px;
+  color: #fafafa;
+  margin-right: 2rem;
+}
+
+.post__delete--submenu .btn-delete:hover {
+  background-color: var(--red-on-hover);
+}
+
+.post__delete--submenu .btn-cancel {
+  color: var(--main-text-color);
 }
 
 .post__body {

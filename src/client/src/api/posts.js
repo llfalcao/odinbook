@@ -47,3 +47,12 @@ export async function updatePost(post) {
     body: JSON.stringify(post),
   });
 }
+
+export async function deletePost(id) {
+  const api = postApis.delete;
+  const token = localStorage.getItem('token');
+  return await fetch(`${api.url}/${id}/delete`, {
+    headers: { Authorization: `Bearer ${token}`, ...api.headers },
+    method: api.method,
+  });
+}
