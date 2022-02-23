@@ -319,3 +319,31 @@
 .pictureForm .cancel-btn:hover {
   background-color: var(--red-on-hover);
 }
+
+.info {
+  position: relative;
+}
+
+.info:hover::after {
+  position: absolute;
+  content: 'llfalcao';
+  background: var(--main-bg-color);
+  color: var(--main-text-color);
+  left: 3rem;
+  bottom: 50%;
+  transform: translateY(50%);
+  border: 1px solid var(--gray-hover);
+  padding: 0.5rem;
+  border-radius: 4px;
+  animation: slide 0.3s ease-out;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translateX(-2rem) translateY(50%);
+  }
+  100% {
+    transform: translateY(50%);
+  }
+}

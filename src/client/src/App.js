@@ -11,6 +11,7 @@ import PostViewer from './views/PostViewer';
 import Profile from './views/Profile';
 import Header from './components/Header';
 import PostEditor from './views/PostEditor';
+import GithubInfo from './components/GithubInfo';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -65,6 +66,8 @@ function App() {
 
         <Route path="*" element={<NotFound user={user} />} />
       </Routes>
+
+      <GithubInfo />
     </BrowserRouter>
   );
 }
