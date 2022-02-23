@@ -4,7 +4,9 @@ The last NodeJS project in [The Odin Project](https://www.theodinproject.com/pat
 
 Frameworks and tools: React, NodeJS, Express, and MongoDB.
 
-![Home](./docs/home2.png)
+#### **Home (theme follows the system default)**
+
+![Home](./docs/home.png)
 
 <div>
   <img src="./docs/post.png" alt="Post" />
