@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BackArrowIcon, LoadingIcon } from '../components/Icons';
 import { createPost } from '../api/posts';
+import Sidebar from '../components/Sidebar';
+import Friendlist from '../components/Friendlist';
 
 export default function PostCreator({ user }) {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function PostCreator({ user }) {
 
   return (
     <div>
+      <Sidebar user={user} />
       <form className="post-form">
         <h1>
           <button type="button" onClick={loadPreviousPage}>
@@ -54,6 +57,7 @@ export default function PostCreator({ user }) {
           Post
         </button>
       </form>
+      <Friendlist username={user.username} />
     </div>
   );
 }

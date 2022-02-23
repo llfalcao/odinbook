@@ -11,6 +11,7 @@ import NewPostCTA from '../components/NewPostCTA';
 import PictureUpdater from '../components/PictureUpdater';
 import Post from '../components/Post';
 import Sidebar from '../components/Sidebar';
+import Friendlist from '../components/Friendlist';
 
 export default function Profile({ user: currentUser }) {
   const navigate = useNavigate();
@@ -35,9 +36,7 @@ export default function Profile({ user: currentUser }) {
   };
 
   useEffect(() => {
-    (async () => {
-      await loadUserData(username);
-    })();
+    loadUserData(username);
 
     return () => {
       setPosts(undefined);
@@ -149,6 +148,7 @@ export default function Profile({ user: currentUser }) {
           )}
         </section>
       </main>
+      <Friendlist username={currentUser.username} />
     </div>
   );
 }

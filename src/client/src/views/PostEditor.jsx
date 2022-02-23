@@ -4,6 +4,7 @@ import { fetchPost, updatePost } from '../api/posts';
 import { BackArrowIcon } from '../components/Icons';
 import Sidebar from '../components/Sidebar';
 import { LoadingIcon } from '../components/Icons';
+import Friendlist from '../components/Friendlist';
 
 export default function PostEditor({ user }) {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function PostEditor({ user }) {
           </button>
         </form>
       </main>
+      <Friendlist username={user.username} />
     </div>
   );
 }

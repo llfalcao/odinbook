@@ -106,10 +106,6 @@ export default function Post({
     const menu = e.target.closest('.post__menu');
     const container = menu.querySelector('.post__menuContainer');
     container.classList.remove('show-menu');
-
-    const btn = e.target.closest('.post__delete');
-    const submenu = btn.querySelector('.post__delete--submenu');
-    submenu.classList.remove('delete-options');
   };
 
   return (
@@ -140,11 +136,12 @@ export default function Post({
           <div className="post__menuContainer">
             <div
               className="post__menuItem"
-              onClick={() =>
+              onClick={(e) => {
                 navigator.clipboard.writeText(
                   `${window.location.hostname}/odinbook/p/${postId}`,
-                )
-              }
+                );
+                hideMenu(e);
+              }}
             >
               <LinkIcon />
               Copy Link
